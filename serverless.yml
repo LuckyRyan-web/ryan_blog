@@ -1,0 +1,41 @@
+# 欢迎使用 ⚡️serverless⚡️ 组件
+#
+# serverless组件是基于具体使用场景(Express, 静态网站等)提供的定制云资源编排和组织的解决方案。
+# 这是serverless的主要配置文件，包含了一些使用示例以及注释说明。
+# 您只需几行配置描述，即可进行云函数、API 网关、COS、DB 等
+# Serverless 资源进行快速创建、部署和修改。
+#
+# 有关完整的配置选项，请检查文档：
+# https://cloud.tencent.com/document/product/1154/51080
+#
+# 👩‍💻 Happy Coding 👨‍💻
+
+# ##应用信息##
+app: ryan-blog # app名称(app唯一识别标识)。同账号下需唯一，留空则继承组件实例名称
+component: website # [必选]要使用组件，更多组件请查看 https://github.com/serverless-components
+name: blog # [必选]组件实例名称
+stage: prd
+
+# #website 组件配置##
+# 更多内容请查看：https://github.com/serverless-components/tencent-website/blob/master/docs/configure.md
+inputs:
+  src: #该项目的代码信息，参数参考执行目录
+    src: ./
+    exclude:
+      - .env
+      - ".git/**"
+      - "**/node_modules"
+    hook: npm run build # 构建命令。在代码上传之前执行
+    dist: ./build # 输出的目录。如果配置 hook，此参数必填
+  region: ap-guangzhou
+  bucket: blog # Bucket 名称（不允许大写字母）。默认添加 AppId 作为后缀
+  protocol: https
+  hosts:
+    - host: luckyryan.cn
+      autoRefresh: true #开启自动 CDN 刷新，用于快速更新和同步加速域名中展示的站点内容
+      onlyRefresh: false #建议首次部署后，将此参数配置为 true，即忽略其他 CDN 配置，只进行刷新操作
+      https:
+        switch: on
+        http2: on
+        certInfo:
+          certId: 'viNElmSm'

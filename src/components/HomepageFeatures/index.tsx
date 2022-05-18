@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'classnames';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 type FeatureItem = {
   title: string;
