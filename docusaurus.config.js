@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     plugins: ['docusaurus-plugin-sass'],
-    title: 'a test',
+    title: '小刘的博客',
     tagline: '一个勤奋的猫奴',
     url: 'https://luckyryan.cn',
     baseUrl: '/',
@@ -62,7 +62,7 @@ const config = {
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             navbar: {
-                title: 'a test',
+                title: '小刘的博客',
                 logo: {
                     alt: 'My Site Logo',
                     src: 'img/nuomi.png',
@@ -75,7 +75,7 @@ const config = {
                         label: '教程',
                     },
                     { to: '/blog', label: 'Blog', position: 'left' },
-                    // { to: '/testblog', label: 'testblog', position: 'left' },
+                    { to: '/about', label: 'test', position: 'left' },
                     // {
                     //     type: 'localeDropdown',
                     //     position: 'right',
