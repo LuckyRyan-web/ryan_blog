@@ -24,8 +24,9 @@ const config = {
     // metadata like html lang. For example, if your site is Chinese, you may want
     // to replace "en" with "zh-Hans".
     i18n: {
-        defaultLocale: 'en',
-        locales: ['en'],
+        // defaultLocale: 'en',
+        defaultLocale: 'zh-CN',
+        locales: ['en', 'zh-CN'],
     },
 
     presets: [
@@ -71,10 +72,14 @@ const config = {
                         type: 'doc',
                         docId: 'intro',
                         position: 'left',
-                        label: 'Tutorial',
+                        label: '教程',
                     },
                     { to: '/blog', label: 'Blog', position: 'left' },
                     // { to: '/testblog', label: 'testblog', position: 'left' },
+                    // {
+                    //     type: 'localeDropdown',
+                    //     position: 'right',
+                    // },
                     {
                         href: 'https://github.com/LuckyRyan-web',
                         label: 'GitHub',
@@ -126,7 +131,6 @@ const config = {
                 //   },
                 // ],
                 copyright: `Copyright © ${new Date().getFullYear()} Ryan liu, Inc. Built with Docusaurus.`,
-                // copyright: `互联网ICP备案:粤ICP备2020117319号`,
             },
             prism: {
                 theme: lightCodeTheme,

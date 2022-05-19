@@ -2,6 +2,8 @@ import React from 'react'
 import clsx from 'classnames'
 import styles from './styles.module.scss'
 
+interface HomepageFeaturesProps {}
+
 type FeatureItem = {
     title: string
     Svg: React.ComponentType<React.ComponentProps<'svg'>>
@@ -57,7 +59,7 @@ function Feature({ title, Svg, description }: FeatureItem) {
     )
 }
 
-export default function HomepageFeatures(): JSX.Element {
+const HomepageFeatures: React.FC<HomepageFeaturesProps> = (props) => {
     return (
         <section className={styles.features}>
             <div className="container">
@@ -70,3 +72,5 @@ export default function HomepageFeatures(): JSX.Element {
         </section>
     )
 }
+
+export default React.memo(HomepageFeatures)

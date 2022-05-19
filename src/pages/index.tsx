@@ -8,8 +8,6 @@ import useDocusaurusContext, {
 import style from './index.module.scss'
 import HomepageFeatures from '@site/src/components/HomepageFeatures'
 
-import { Button } from 'antd'
-
 function HomepageHeader() {
     const { siteConfig } = useDocusaurusContext()
     return (
@@ -43,14 +41,15 @@ const Home: React.FC<HomeProps> = (props) => {
         <Layout
             title={`Hello from ${siteConfig.title}`}
             description="Description will go into a meta tag in <head />"
-            noFooter={true}
+            // noFooter={true}
         >
             <HomepageHeader />
+
             <main>
                 <HomepageFeatures />
             </main>
 
-            <footer
+            {/* <footer
                 className={classnames('footer footer--dark', style.fixFooter)}
             >
                 <div className="container container-fluid">
@@ -61,7 +60,7 @@ const Home: React.FC<HomeProps> = (props) => {
                         </Button>
                     </div>
                 </div>
-            </footer>
+            </footer> */}
         </Layout>
     )
 }

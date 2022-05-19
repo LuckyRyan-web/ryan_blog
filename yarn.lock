@@ -3566,6 +3566,11 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
+dot-template-types@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/dot-template-types/-/dot-template-types-0.3.0.tgz#a749d35c61f642f27f5410704d40c054016fb67b"
+  integrity sha512-e7n+KXYONvSarp3zwPxVCO6FqGsMoBg5v+J75lZBtJSAHBJtpiv0ZsT8G6bSD+nhdrP0cMbzPtcIz71xiUwEBQ==
+
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
