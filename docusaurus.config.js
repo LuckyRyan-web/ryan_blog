@@ -6,7 +6,27 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    plugins: ['docusaurus-plugin-sass'],
+    plugins: [
+        'docusaurus-plugin-sass',
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'algorithm',
+                path: 'algorithm',
+                routeBasePath: 'algorithm',
+                sidebarPath: require.resolve('./sidebarsAlgorithm.js'),
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'interview',
+                path: 'interview',
+                routeBasePath: 'interview',
+                sidebarPath: require.resolve('./sidebars.js'),
+            },
+        ],
+    ],
     title: '小刘的博客',
     tagline: '一个勤奋的猫奴',
     url: 'https://luckyryan.cn',
@@ -43,6 +63,19 @@ const config = {
                 },
                 blog: {
                     showReadingTime: true,
+                    readingTime: ({
+                        content,
+                        frontMatter,
+                        defaultReadingTime,
+                    }) =>
+                        defaultReadingTime({
+                            content,
+                            options: { wordsPerMinute: 300 },
+                        }),
+                    postsPerPage: 10,
+                    blogSidebarTitle: '全部实践文章',
+                    blogTitle: 'ryan-liu 博客！',
+                    blogDescription: '这是个用 Docusaurus 搭建的博客！',
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
@@ -76,6 +109,20 @@ const config = {
                     },
                     { to: '/blog', label: 'Blog', position: 'left' },
                     { to: '/about', label: 'test', position: 'left' },
+                    {
+                        to: '/algorithm',
+                        label: '算法积累',
+                        position: 'left',
+                        // activeBaseRegex: `/community/`,
+                    },
+                    { to: '/interview', label: '面试题积累', position: 'left' },
+
+                    // {
+                    //     type: 'doc',
+                    //     docId: 'community',
+                    //     position: 'left',
+                    //     label: '测试',
+                    // },
                     // {
                     //     type: 'localeDropdown',
                     //     position: 'right',
