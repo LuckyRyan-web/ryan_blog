@@ -20,9 +20,9 @@ const config = {
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'interview',
-                path: 'interview',
-                routeBasePath: 'interview',
+                id: 'Interview',
+                path: 'Interview',
+                routeBasePath: 'Interview',
                 sidebarPath: require.resolve('./sidebars.js'),
             },
         ],
@@ -43,11 +43,12 @@ const config = {
     // Even if you don't use internalization, you can use this field to set useful
     // metadata like html lang. For example, if your site is Chinese, you may want
     // to replace "en" with "zh-Hans".
-    i18n: {
-        // defaultLocale: 'en',
-        defaultLocale: 'zh-CN',
-        locales: ['en', 'zh-CN'],
-    },
+
+    // i18n: {
+    //     // defaultLocale: 'en',
+    //     defaultLocale: 'zh-CN',
+    //     locales: ['en', 'zh-CN'],
+    // },
 
     presets: [
         [
@@ -115,7 +116,7 @@ const config = {
                         position: 'left',
                         // activeBaseRegex: `/community/`,
                     },
-                    { to: '/interview', label: '面试题积累', position: 'left' },
+                    { to: '/Interview', label: '面试题积累', position: 'left' },
 
                     // {
                     //     type: 'doc',
