@@ -102,14 +102,14 @@ const config = {
                     src: 'img/nuomi.png',
                 },
                 items: [
-                    {
-                        type: 'doc',
-                        docId: 'intro',
-                        position: 'left',
-                        label: '教程',
-                    },
+                    // {
+                    //     type: 'doc',
+                    //     docId: 'intro',
+                    //     position: 'left',
+                    //     label: '教程',
+                    // },
                     { to: '/blog', label: 'Blog', position: 'left' },
-                    { to: '/about', label: 'test', position: 'left' },
+                    // { to: '/about', label: 'test', position: 'left' },
                     {
                         to: '/algorithm',
                         label: '算法积累',

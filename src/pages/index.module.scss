@@ -31,3 +31,32 @@
 .link {
     color: var(--ifm-color-primary);
 }
+
+.bg {
+    text-align: center;
+    overflow: hidden;
+    background: url('https://txy-tc-ly-1256104767.cos.ap-guangzhou.myqcloud.com/bg.svg') center center / cover no-repeat;
+    height: calc(100vh - 146px);
+    width: 100%;
+
+    h1 p {
+        transition: all 0.25s ease-in-out 0.04s;
+        transform: translateY(0px);
+        opacity: 1;
+    }
+
+    h1 {
+        font-size: 50px;
+    }
+
+    p {
+        font-size: 26px;
+    }
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

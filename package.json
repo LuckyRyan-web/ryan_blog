@@ -13,7 +13,9 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "dev:dtpl": "tsc -P .dtpl/tsconfig.json -w"
+    "dev:dtpl": "tsc -P .dtpl/tsconfig.json -w",
+    "lint": "lint-md '**/*.{md}'",
+    "lint:fix": "lint-md '**/*.{md}' --fix"
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-beta.20",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-beta.20",
+    "@lint-md/cli": "^0.1.8",
     "@tsconfig/docusaurus": "^1.0.5",
     "dot-template-types": "^0.3.0",
     "prettier": "^2.6.2",
