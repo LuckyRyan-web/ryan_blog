@@ -14,15 +14,15 @@ const config = {
                 id: 'algorithm',
                 path: 'algorithm',
                 routeBasePath: 'algorithm',
-                sidebarPath: require.resolve('./sidebarsAlgorithm.js'),
+                sidebarPath: require.resolve('./sidebars.js'),
             },
         ],
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'Interview',
-                path: 'Interview',
-                routeBasePath: 'Interview',
+                id: 'interview',
+                path: 'interview',
+                routeBasePath: 'interview',
                 sidebarPath: require.resolve('./sidebars.js'),
             },
         ],
@@ -57,6 +57,8 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
+                    sidebarCollapsed: false,
+                    sidebarCollapsible: false,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
@@ -116,7 +118,7 @@ const config = {
                         position: 'left',
                         // activeBaseRegex: `/community/`,
                     },
-                    { to: '/Interview', label: '面试题积累', position: 'left' },
+                    { to: '/interview', label: '面试题积累', position: 'left' },
 
                     // {
                     //     type: 'doc',
