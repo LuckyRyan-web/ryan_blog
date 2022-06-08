@@ -1,7 +1,4 @@
 {
   "label": "栈",
-  "link": {
-    "type": "generated-index",
-    "description": "这个是字符串类的解法"
-  }
+  "link": {"type": "doc", "id": "stack_intro"}
 }

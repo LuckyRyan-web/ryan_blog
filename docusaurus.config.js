@@ -57,8 +57,8 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
-                    sidebarCollapsed: false,
-                    sidebarCollapsible: false,
+                    // sidebarCollapsed: false,
+                    // sidebarCollapsible: false,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
@@ -181,6 +181,12 @@ const config = {
                 //   },
                 // ],
                 copyright: `Copyright © ${new Date().getFullYear()} Ryan liu, Inc. Built with Docusaurus.`,
+            },
+            docs: {
+                sidebar: {
+                    hideable: true,
+                    autoCollapseCategories: true,
+                },
             },
             prism: {
                 theme: lightCodeTheme,
