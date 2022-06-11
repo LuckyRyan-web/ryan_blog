@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react'
 import classnames from 'classnames'
+import style from './index.module.scss'
+
 import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
 import useDocusaurusContext, {
     DocusaurusContextExtra,
 } from '@docusaurus/useDocusaurusContext'
-import style from './index.module.scss'
 import HomepageFeatures from '@site/src/components/HomepageFeatures'
 
 function HomepageHeader() {
@@ -28,6 +29,15 @@ function HomepageHeader() {
     )
 }
 
+function HomePage() {
+    return (
+        <div className={classnames(style.bg, style.center)}>
+            <h1>小刘的网站</h1>
+            <p>个人知识点系统整理</p>
+        </div>
+    )
+}
+
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = (props) => {
@@ -40,27 +50,13 @@ const Home: React.FC<HomeProps> = (props) => {
     return (
         <Layout
             title={`Hello from ${siteConfig.title}`}
-            description="Description will go into a meta tag in <head />"
             // noFooter={true}
         >
-            <HomepageHeader />
+            {/* <HomepageHeader />
 
-            <main>
-                <HomepageFeatures />
-            </main>
+            <main><HomepageFeatures /></main> */}
 
-            {/* <footer
-                className={classnames('footer footer--dark', style.fixFooter)}
-            >
-                <div className="container container-fluid">
-                    <div className="text--center">
-                        <div>{siteConfig.themeConfig.footer.copyright}</div>
-                        <Button type="link" onClick={Link}>
-                            互联网ICP备案:粤ICP备2020117319号
-                        </Button>
-                    </div>
-                </div>
-            </footer> */}
+            <main>{<HomePage />}</main>
         </Layout>
     )
 }

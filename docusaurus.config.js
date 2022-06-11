@@ -14,7 +14,7 @@ const config = {
                 id: 'algorithm',
                 path: 'algorithm',
                 routeBasePath: 'algorithm',
-                sidebarPath: require.resolve('./sidebarsAlgorithm.js'),
+                sidebarPath: require.resolve('./sidebars.js'),
             },
         ],
         [
@@ -43,11 +43,12 @@ const config = {
     // Even if you don't use internalization, you can use this field to set useful
     // metadata like html lang. For example, if your site is Chinese, you may want
     // to replace "en" with "zh-Hans".
-    i18n: {
-        // defaultLocale: 'en',
-        defaultLocale: 'zh-CN',
-        locales: ['en', 'zh-CN'],
-    },
+
+    // i18n: {
+    //     // defaultLocale: 'en',
+    //     defaultLocale: 'zh-CN',
+    //     locales: ['en', 'zh-CN'],
+    // },
 
     presets: [
         [
@@ -56,6 +57,8 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
+                    // sidebarCollapsed: false,
+                    // sidebarCollapsible: false,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
@@ -81,12 +84,12 @@ const config = {
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },
-                theme: {
-                    customCss: [
-                        require.resolve('./src/css/custom.css'),
-                        require.resolve('./src/css/antd.css'),
-                    ],
-                },
+                // theme: {
+                //     customCss: [
+                //         require.resolve('./src/css/custom.css'),
+                //         require.resolve('./src/css/antd.css'),
+                //     ],
+                // },
             }),
         ],
     ],
@@ -101,14 +104,14 @@ const config = {
                     src: 'img/nuomi.png',
                 },
                 items: [
-                    {
-                        type: 'doc',
-                        docId: 'intro',
-                        position: 'left',
-                        label: '教程',
-                    },
+                    // {
+                    //     type: 'doc',
+                    //     docId: 'intro',
+                    //     position: 'left',
+                    //     label: '教程',
+                    // },
                     { to: '/blog', label: 'Blog', position: 'left' },
-                    { to: '/about', label: 'test', position: 'left' },
+                    // { to: '/about', label: 'test', position: 'left' },
                     {
                         to: '/algorithm',
                         label: '算法积累',
@@ -178,6 +181,12 @@ const config = {
                 //   },
                 // ],
                 copyright: `Copyright © ${new Date().getFullYear()} Ryan liu, Inc. Built with Docusaurus.`,
+            },
+            docs: {
+                sidebar: {
+                    hideable: true,
+                    autoCollapseCategories: true,
+                },
             },
             prism: {
                 theme: lightCodeTheme,
