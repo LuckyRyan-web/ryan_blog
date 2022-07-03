@@ -46,6 +46,31 @@ export default function (source: _.Source): _.IDtplConfig {
                 },
             },
             {
+                name: 'template/page',
+                matches: (
+                    _minimatch: _.IMinimatchFunction,
+                    source: _.Source
+                ) => {
+                    if (!source.isDirectory) {
+                        return false
+                    }
+
+                    const { rawModuleName, relativeFilePath } = source.basicData
+
+                    // 小写不生成
+                    if (/^[a-z]/.test(rawModuleName)) {
+                        return false
+                    }
+
+                    // 在 pages 中大小写都要生成 mdx 文件
+                    if (!relativeFilePath.startsWith('src/custom')) {
+                        return false
+                    }
+
+                    return true
+                },
+            },
+            {
                 name: 'template/components',
                 matches: (
                     _minimatch: _.IMinimatchFunction,

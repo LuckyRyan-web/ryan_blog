@@ -15,6 +15,9 @@ const config = {
                 path: 'algorithm',
                 routeBasePath: 'algorithm',
                 sidebarPath: require.resolve('./sidebars.js'),
+                docTagDocListComponent: '@site/src/custom/DocsTagsList',
+                docTagsListComponent: '@site/src/custom/DocsTagsDetailList',
+                docItemComponent: '@site/src/custom/DocsContent',
             },
         ],
         [
@@ -24,6 +27,8 @@ const config = {
                 path: 'interview',
                 routeBasePath: 'interview',
                 sidebarPath: require.resolve('./sidebars.js'),
+                docTagDocListComponent: '@site/src/custom/DocsTagsList',
+                docTagsListComponent: '@site/src/custom/DocsTagsDetailList',
             },
         ],
     ],
@@ -56,7 +61,7 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
-                    sidebarPath: require.resolve('./sidebars.js'),
+                    // sidebarPath: require.resolve('./sidebars.js'),
                     // sidebarCollapsed: false,
                     // sidebarCollapsible: false,
                     // Please change this to your repo.
@@ -81,6 +86,9 @@ const config = {
                     blogDescription: '这是个用 Docusaurus 搭建的博客！',
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
+                    blogTagsListComponent: '@site/src/custom/DocsTagsList',
+                    blogTagsPostsComponent:
+                        '@site/src/custom/BlogTagsDetailPage',
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },
