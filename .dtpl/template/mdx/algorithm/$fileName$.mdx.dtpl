@@ -1,5 +1,7 @@
 ---
 title: ${fileName}
+hide_table_of_contents: true
+tags:
 ---
 
 import CodeBlock from '@theme/CodeBlock'

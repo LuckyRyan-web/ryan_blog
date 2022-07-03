@@ -95,6 +95,28 @@ export default function (source: _.Source): _.IDtplConfig {
                 },
             },
             {
+                name: 'template/mdx/algorithm/$fileName$.mdx.dtpl',
+                matches: (
+                    _minimatch: _.IMinimatchFunction,
+                    source: _.Source
+                ) => {
+                    if (!source.isFile) {
+                        return false
+                    }
+
+                    const { rawModuleName, relativeFilePath, fileExt } =
+                        source.basicData
+
+                    if (!relativeFilePath.startsWith('algorithm')) {
+                        return false
+                    }
+
+                    if (fileExt.indexOf('mdx') !== -1) {
+                        return true
+                    }
+                },
+            },
+            {
                 name: 'template/mdx/$fileName$.mdx.dtpl',
                 matches: (
                     _minimatch: _.IMinimatchFunction,

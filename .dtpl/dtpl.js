@@ -43,6 +43,10 @@ function default_1(source) {
                         return false;
                     }
                     const { rawModuleName, relativeFilePath } = source.basicData;
+                    // 小写不生成
+                    if (/^[a-z]/.test(rawModuleName)) {
+                        return false;
+                    }
                     // 在 pages 中大小写都要生成 mdx 文件
                     if (!relativeFilePath.startsWith('src/custom')) {
                         return false;
@@ -65,6 +69,21 @@ function default_1(source) {
                         return false;
                     }
                     return true;
+                },
+            },
+            {
+                name: 'template/mdx/algorithm/$fileName$.mdx.dtpl',
+                matches: (_minimatch, source) => {
+                    if (!source.isFile) {
+                        return false;
+                    }
+                    const { rawModuleName, relativeFilePath, fileExt } = source.basicData;
+                    if (!relativeFilePath.startsWith('algorithm')) {
+                        return false;
+                    }
+                    if (fileExt.indexOf('mdx') !== -1) {
+                        return true;
+                    }
                 },
             },
             {
