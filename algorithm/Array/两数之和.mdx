@@ -1,6 +1,6 @@
 ---
 title: 1.两数之和
-group:
+hide_table_of_contents: true
 tags:
     - 排序算法
     - 哈希表
@@ -17,11 +17,13 @@ import TwoSumCode2 from '!!raw-loader!./code/1/TwoSum2.js'
 <Tabs>
 <TabItem value="1" label="暴力排序" default>
 
-### 思路
+## 思路
+
+直接暴力解法，遍历两次数组来进行每一次判断
 
 <CodeBlock language="ts">{TwoSumCode1}</CodeBlock>
 
-### 复杂度分析
+## 复杂度分析
 
 -   时间复杂度：最坏的情况就是要遍历两次数组，时间复杂度也就是 N \* N = O(N<sup>2</sup>)
 
@@ -31,15 +33,17 @@ import TwoSumCode2 from '!!raw-loader!./code/1/TwoSum2.js'
 
 <TabItem value="2" label="哈希表解法">
 
-### 思路
+## 思路
 
 遍历数组，把值存储在一个对象或者 map 里面，每次循环都计算一次是否有这个值
 
 存储的结构最好还是 map ，因为 obj 返回的 0 会判断为 false,直接用 map.has 的方法可以直接返回 boolean
 
+## 代码
+
 <CodeBlock language="ts">{TwoSumCode2}</CodeBlock>
 
-### 复杂度分析
+## 复杂度分析
 
 -   时间复杂度：最坏的情况就是遍历完数组,也就是 O(N)
 

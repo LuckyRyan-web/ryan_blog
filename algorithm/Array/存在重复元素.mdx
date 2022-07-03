@@ -2,6 +2,7 @@
 title: 217. 存在重复元素
 categories: 算法
 group: 算法
+hide_table_of_contents: true
 tags:
     - 排序算法
     - 哈希表
@@ -18,13 +19,13 @@ import MyComponentSource2 from '!!raw-loader!./code/217/ContainsDuplicate2.ts'
 <Tabs>
     <TabItem value="1" label="排序" default>
 
-### 思路
+## 思路
 
 首先对数组进行排序，然后对数组进行排序，遍历数组对 N 和 N+1 项进行比较，如果相等的话就是有重复的数据
 
 <CodeBlock language="ts">{MyComponentSource1}</CodeBlock>
 
-### 复杂度分析
+## 复杂度分析
 
 -   时间复杂度：O(N log N)，其中 N 为遍历 nums 的长度， logN 为 nums.sort 的消耗
 
@@ -33,13 +34,13 @@ import MyComponentSource2 from '!!raw-loader!./code/217/ContainsDuplicate2.ts'
 </TabItem>
 <TabItem value="2" label="哈希表">
 
-### 思路
+## 思路
 
 只需要遍历 `nums` 数组的元素，每一个都存储到对象 numMap 里面，如果有重复的数据即可得出结果
 
 <CodeBlock language="ts">{MyComponentSource2}</CodeBlock>
 
-### 复杂度分析
+## 复杂度分析
 
 -   时间复杂度：O(N)，最长时间为遍历 nums 数组所用的时间
 

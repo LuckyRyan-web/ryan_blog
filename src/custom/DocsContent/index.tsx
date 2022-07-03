@@ -81,7 +81,12 @@ function DocItemContent(props: Props): JSX.Element {
                 )}
             >
                 <DocVersionBanner />
-                <div className={styles.docItemContainer}>
+                <div
+                    className={classnames(
+                        styles.docItemContainer,
+                        styles.docsContent
+                    )}
+                >
                     <article>
                         <DocBreadcrumbs />
                         <DocVersionBadge />
