@@ -1,3 +1,3 @@
-[submodule "leetcode"]
-	path = leetcode
+[submodule "code"]
+	path = code
 	url = git@github.com:LuckyRyan-web/leetcode.git
