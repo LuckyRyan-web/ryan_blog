@@ -9,6 +9,7 @@ import React from 'react'
 //import style from './style.module.scss'
 import Layout from '@theme/Layout'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
+import * as tags from '@theme/BlogTagsListPage'
 // import {
 //     Tags,
 //     TagList,

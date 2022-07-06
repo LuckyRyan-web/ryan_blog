@@ -20,6 +20,9 @@ import type { Props } from '@theme/DocTagsListPage'
 
 export default function DocTagsListPage({ tags }: Props): JSX.Element {
     const title = translateTagsPageTitle()
+
+    console.log('tags', tags)
+
     return (
         <HtmlClassNameProvider
             className={clsx(
