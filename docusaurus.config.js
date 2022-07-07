@@ -197,9 +197,8 @@ const config = {
                 },
             },
             prism: {
-                // theme: require('prism-react-renderer/themes/dracula'),
-                theme: lightCodeTheme,
-                darkTheme: darkCodeTheme,
+                // theme: lightCodeTheme,
+                // darkTheme: darkCodeTheme,
             },
         }),
 }
