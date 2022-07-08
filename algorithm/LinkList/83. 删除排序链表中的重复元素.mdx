@@ -1,0 +1,61 @@
+---
+title: 83. 删除排序链表中的重复元素
+hide_table_of_contents: true
+tags:
+    - 链表
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 思路
+
+从字面意思来看可以直接写出代码
+
+```ts
+function deleteDuplicates(head: ListNode | null): ListNode | null {
+    let p1 = head
+
+    while (p1) {
+        if (p1.val === p1.next?.val) {
+            p1.next = p1.next.next
+        }
+        p1 = p1.next
+    }
+
+    return head
+}
+```
+
+但是如上代码，如果是三个相等的数字就会出现如下结果
+
+```
+input: [1,1,1]
+output: [1,1]
+expect: [1]
+```
+
+因为在进行 [1,1,1] 的前两位的时候，1 -> 1 还是经过 `p1 = p1.next` 往后面移动了一位
+
+然后下一个 1 去判断的时候 `1 !== 0` 就会停止，所以得出 `[1,1]` 的结果
+
+经过上述描述，`p1 = p1.next` 这一行代码在跟下一个节点数据都一样的时候不应该被执行到，不然救护出现上面的代码, 也就是把这一行代码放到 else 去执行即可
+
+如下代码所示:
+
+```ts
+function deleteDuplicates(head: ListNode | null): ListNode | null {
+    let p1 = head
+
+    while (p1) {
+        if (p1.val === p1.next?.val) {
+            p1.next = p1.next.next
+        } else {
+            p1 = p1.next
+        }
+    }
+
+    return head
+}
+```
