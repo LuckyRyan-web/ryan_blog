@@ -1,12 +1,13 @@
 /**
- * 用于重写 '@theme/BlogTagsPostsPage'
+ * blog 标签详情
  * @author liuyuan
- * @date 2022-07-03 16:47
+ * @date 2022-07-09 15:14
  * @since 0.0.0
  */
-
 import React from 'react'
-import clsx from 'clsx'
+import Link from '@docusaurus/Link'
+import BlogLayout from '@theme/BlogLayout'
+import BlogPostItem from '@theme/BlogPostItem'
 import Translate, { translate } from '@docusaurus/Translate'
 import {
     PageMetadata,
@@ -14,14 +15,11 @@ import {
     ThemeClassNames,
     usePluralForm,
 } from '@docusaurus/theme-common'
-import Link from '@docusaurus/Link'
-import BlogLayout from '@theme/BlogLayout'
-import BlogPostItem from '@theme/BlogPostItem'
 import BlogListPaginator from '@theme/BlogListPaginator'
 import SearchMetadata from '@theme/SearchMetadata'
+import clsx from 'clsx' // Very simple pluralization: probably good enough for now
 import type { Props } from '@theme/BlogTagsPostsPage'
 
-// Very simple pluralization: probably good enough for now
 function useBlogPostsPlural() {
     const { selectMessage } = usePluralForm()
     return (count: number) =>
@@ -34,7 +32,9 @@ function useBlogPostsPlural() {
                         'Pluralized label for "{count} posts". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
                     message: 'One post|{count} posts',
                 },
-                { count }
+                {
+                    count,
+                }
             )
         )
 }
@@ -44,7 +44,7 @@ export default function BlogTagsPostsPage({
     items,
     sidebar,
     listMetadata,
-}: Props): JSX.Element {
+}: Props) {
     const blogPostsPlural = useBlogPostsPlural()
     const title = translate(
         {
@@ -52,9 +52,11 @@ export default function BlogTagsPostsPage({
             description: 'The title of the page for a blog tag',
             message: '{nPosts} tagged with "{tagName}"',
         },
-        { nPosts: blogPostsPlural(tag.count), tagName: tag.label }
+        {
+            nPosts: blogPostsPlural(tag.count),
+            tagName: tag.label,
+        }
     )
-
     return (
         <HtmlClassNameProvider
             className={clsx(

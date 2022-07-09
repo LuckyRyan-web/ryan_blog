@@ -15,8 +15,8 @@ const config = {
                 path: 'algorithm',
                 routeBasePath: 'algorithm',
                 sidebarPath: require.resolve('./sidebars.js'),
-                docTagDocListComponent: '@site/src/custom/docs/TagsDetail',
-                docTagsListComponent: '@site/src/custom/docs/TagsList',
+                // docTagDocListComponent: '@site/src/custom/docs/TagsDetail',
+                // docTagsListComponent: '@site/src/custom/docs/TagsList',
                 docItemComponent: '@site/src/custom/DocsContent',
             },
         ],
@@ -27,8 +27,8 @@ const config = {
                 path: 'interview',
                 routeBasePath: 'interview',
                 sidebarPath: require.resolve('./sidebars.js'),
-                docTagDocListComponent: '@site/src/custom/docs/TagsDetail',
-                docTagsListComponent: '@site/src/custom/docs/TagsList',
+                // docTagDocListComponent: '@site/src/custom/docs/TagsDetail',
+                // docTagsListComponent: '@site/src/custom/docs/TagsList',
                 docItemComponent: '@site/src/custom/DocsContent',
             },
         ],
@@ -87,8 +87,8 @@ const config = {
                     blogDescription: '这是个用 Docusaurus 搭建的博客！',
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    blogTagsListComponent: '@site/src/custom/blog/TagsList',
-                    blogTagsPostsComponent: '@site/src/custom/blog/TagsDetail',
+                    // blogTagsListComponent: '@site/src/custom/blog/TagsList',
+                    // blogTagsPostsComponent: '@site/src/custom/blog/TagsDetail',
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },

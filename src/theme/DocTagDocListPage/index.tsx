@@ -1,12 +1,5 @@
-/**
- * 用于重写 '@theme/DocTagDocListPage'
- * @author liuyuan
- * @date 2022-07-03 16:46
- * @since 0.0.0
- */
-
 import React from 'react'
-import clsx from 'classnames'
+import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
 import {
     PageMetadata,
@@ -15,14 +8,12 @@ import {
     usePluralForm,
 } from '@docusaurus/theme-common'
 import Translate, { translate } from '@docusaurus/Translate'
-import Layout from '@theme/Layout'
 import SearchMetadata from '@theme/SearchMetadata'
+import clsx from 'clsx' // Very simple pluralization: probably good enough for now
 import type { Props } from '@theme/DocTagDocListPage'
 
-// Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
     const { selectMessage } = usePluralForm()
-
     return (count: number) =>
         selectMessage(
             count,
@@ -33,7 +24,9 @@ function useNDocsTaggedPlural() {
                         'Pluralized label for "{count} docs tagged". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
                     message: 'One doc tagged|{count} docs tagged',
                 },
-                { count }
+                {
+                    count,
+                }
             )
         )
 }
@@ -57,9 +50,11 @@ export default function DocTagDocListPage({ tag }: Props): JSX.Element {
             description: 'The title of the page for a docs tag',
             message: '{nDocsTagged} with "{tagName}"',
         },
-        { nDocsTagged: nDocsTaggedPlural(tag.count), tagName: tag.label }
+        {
+            nDocsTagged: nDocsTaggedPlural(tag.count),
+            tagName: tag.label,
+        }
     )
-
     return (
         <HtmlClassNameProvider
             className={clsx(

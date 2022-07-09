@@ -1,28 +1,29 @@
 /**
- * 用于重写 '@theme/BlogTagsListPage'
+ * blog 标签列表
  * @author liuyuan
- * @date 2022-07-03 16:47
+ * @date 2022-07-09 15:14
  * @since 0.0.0
  */
 
 import React from 'react'
-import clsx from 'clsx'
+import BlogLayout from '@theme/BlogLayout'
+import TagsListByLetter from '@theme/TagsListByLetter'
 import {
     PageMetadata,
     HtmlClassNameProvider,
     ThemeClassNames,
     translateTagsPageTitle,
 } from '@docusaurus/theme-common'
-import BlogLayout from '@theme/BlogLayout'
-import TagsListByLetter from '@theme/TagsListByLetter'
+import SearchMetadata from '../SearchMetadata'
 import type { Props } from '@theme/BlogTagsListPage'
-import SearchMetadata from '../../components/SearchMetadata'
+import clsx from 'clsx'
 
 export default function BlogTagsListPage({
     tags,
     sidebar,
 }: Props): JSX.Element {
     const title = translateTagsPageTitle()
+
     return (
         <HtmlClassNameProvider
             className={clsx(

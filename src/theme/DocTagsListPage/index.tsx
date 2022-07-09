@@ -1,28 +1,22 @@
 /**
- * 用于重写 @theme/DocTagsListPage
  * @author liuyuan
  * @date 2022-07-03 16:46
  * @since 0.0.0
  */
 
 import React from 'react'
-import clsx from 'classnames'
+import Layout from '@theme/Layout'
 import {
     PageMetadata,
     HtmlClassNameProvider,
     ThemeClassNames,
     translateTagsPageTitle,
 } from '@docusaurus/theme-common'
-import Layout from '@theme/Layout'
 import TagsListByLetter from '@theme/TagsListByLetter'
 import SearchMetadata from '@theme/SearchMetadata'
-import type { Props } from '@theme/DocTagsListPage'
-
-export default function DocTagsListPage({ tags }: Props): JSX.Element {
+import clsx from 'clsx'
+export default function DocTagsListPage({ tags }) {
     const title = translateTagsPageTitle()
-
-    console.log('tags', tags)
-
     return (
         <HtmlClassNameProvider
             className={clsx(
