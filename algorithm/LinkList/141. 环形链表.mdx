@@ -1,0 +1,89 @@
+---
+title: 141. 环形链表
+hide_table_of_contents: true
+tags:
+    - 链表
+    - 双指针
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 思路
+
+从题目的字面意思来说，就是 [3, 2, 0, 4] 这个链表， 来一个快慢双指针一起遍历，慢的指针每次走一步，快的指针每次走两步（也就是题目所说的 ** 可以通过连续跟踪 next 指针再次到达 **）
+
+根据题目的描述，先定义两个指针
+
+```ts
+let p1 = head
+let p2 = head
+```
+
+如果是长度为 1 的链表，也就是没有 `p.next === null` 就不用进行遍历判断了
+
+```ts
+
+...
+if (!p1.next) {
+    return false
+}
+...
+
+```
+
+然后进行双指针遍历
+
+```ts
+
+...
+while (p1 && p2) {
+    // 双指针都往下移动一位
+    p1 = p1.next
+
+    // 进两位有可能是没有的
+    p2 = p2?.next?.next || null
+
+    // 判断两个指针指向的内存地址是否一致，内存地址相等就说明有 pos,也就是构成了一个环形链表
+    if (p1 === p2) {
+        return true
+    }
+}
+return false
+...
+
+```
+
+完整代码如下:
+
+```ts
+function hasCycle(head: ListNode | null): boolean {
+    let p1 = head
+    let p2 = head
+
+    // 长度为 1 的链表，不可能有环
+    if (!p1?.next) {
+        return false
+    }
+
+    // 双指针遍历链表
+    while (p1 && p2) {
+        p1 = p1.next
+        p2 = p2?.next?.next || null
+
+        // 判断指向的内存地址是否一致
+        if (p1 === p2) {
+            return true
+        }
+    }
+
+    return false
+}
+```
+
+## 复杂度分析
+
+时间复杂度：因为只有一个 while 循环，所以是 O(N)
+
+空间复杂度：因为只定义了两个变量，没有额外的线性变量赋值，所以为 O(1)

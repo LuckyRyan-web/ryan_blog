@@ -34,13 +34,19 @@ function deleteDuplicates(head: ListNode | null): ListNode | null {
 input: [1,1,1]
 output: [1,1]
 expect: [1]
+
+input: [0,0,0,0,0]
+output: [0,0,0]
+expect: [0]
 ```
 
-因为在进行 [1,1,1] 的前两位的时候，1 -> 1 还是经过 `p1 = p1.next` 往后面移动了一位
+可以进行调试, 在第一次循环的时候 `p1.next = p1.next.next` 得到了 [1,1], 然后执行下一行代码 `p1 = p1.next`, 也就是 `1 = null`, null 被赋值给了值是 1 的 p1
 
-然后下一个 1 去判断的时候 `1 !== 0` 就会停止，所以得出 `[1,1]` 的结果
+然后进行下一轮循环 `while(null)` 退出循环， 得到结果 [1,1]
 
-经过上述描述，`p1 = p1.next` 这一行代码在跟下一个节点数据都一样的时候不应该被执行到，不然救护出现上面的代码, 也就是把这一行代码放到 else 去执行即可
+第二个 [0,0,0,0,0] 的案例也是同样道理，只会执行一半的去重操作
+
+经过上述描述，`p1 = p1.next` 这一行代码在跟下一个节点数据一样的时候不应该被执行到，不然就会出现上面的代码, 也就是把这一行代码放到 `else` 去执行即可
 
 如下代码所示:
 
@@ -59,3 +65,9 @@ function deleteDuplicates(head: ListNode | null): ListNode | null {
     return head
 }
 ```
+
+## 复杂度分析
+
+时间复杂度： O(N) ，因为就一个 while 循环体
+
+空间复杂度： O(1)， 因为没有额外的变量存储, 就一个 `let p = head` , 没有任何的线性增长数据
