@@ -7,25 +7,52 @@
 /* You can override the default Infima variables here. */
 
 :root {
-    --ifm-color-primary: #2e8555;
+    --ifm-color-primary: #3678e5;
+    --ifm-color-primary-dark: #1d67e2;
+    --ifm-color-primary-darker: #1c61d5;
+    --ifm-color-primary-darkest: #1750af;
+    --ifm-color-primary-light: #4f89e8;
+    --ifm-color-primary-lighter: #5c91ea;
+    --ifm-color-primary-lightest: #81aaef;
+
+    /* --ifm-color-primary: #2e8555;
     --ifm-color-primary-dark: #29784c;
     --ifm-color-primary-darker: #277148;
     --ifm-color-primary-darkest: #205d3b;
     --ifm-color-primary-light: #33925d;
     --ifm-color-primary-lighter: #359962;
-    --ifm-color-primary-lightest: #3cad6e;
+    --ifm-color-primary-lightest: #3cad6e; */
     --ifm-code-font-size: 95%;
     --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-    --ifm-color-primary: #25c2a0;
+    --ifm-color-primary: #3678e5;
+    --ifm-color-primary-dark: #1d67e2;
+    --ifm-color-primary-darker: #1c61d5;
+    --ifm-color-primary-darkest: #1750af;
+    --ifm-color-primary-light: #4f89e8;
+    --ifm-color-primary-lighter: #5c91ea;
+    --ifm-color-primary-lightest: #81aaef;
+
+    /* --ifm-color-primary: #25c2a0;
     --ifm-color-primary-dark: #21af90;
     --ifm-color-primary-darker: #1fa588;
     --ifm-color-primary-darkest: #1a8870;
     --ifm-color-primary-light: #29d5b0;
     --ifm-color-primary-lighter: #32d8b4;
-    --ifm-color-primary-lightest: #4fddbf;
+    --ifm-color-primary-lightest: #4fddbf; */
     --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+* {
+    transition: background-color 0.25s, box-shadow 0.25s, border 0.3s ease-out,
+        border-color 0.3s ease-out, box-shadow-color 0.3s ease-out;
+    transition-property: background-color, box-shadow, border, border-color,
+        box-shadow-color, border-color;
+    transition-duration: 0.3s, 0.3s 0.3s 0.3s 0.3s 0.3s;
+    transition-timing-function: ease-out, ease-out, ease-out, ease-out, ease-out,
+        ease-out;
+    transition-delay: 0s, 0s, 0s, 0s, 0s, 0s;
 }
