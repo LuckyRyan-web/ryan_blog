@@ -47,12 +47,13 @@
 }
 
 * {
-    transition: background-color 0.25s, box-shadow 0.25s, border 0.3s ease-out,
-        border-color 0.3s ease-out, box-shadow-color 0.3s ease-out;
-    transition-property: background-color, box-shadow, border, border-color,
-        box-shadow-color, border-color;
-    transition-duration: 0.3s, 0.3s 0.3s 0.3s 0.3s 0.3s;
+    transition: background 0.3s ease-out, background-color 0.3s, box-shadow 0.3s,
+        border 0.3s ease-out, border-color 0.3s ease-out,
+        box-shadow-color 0.3s ease-out;
+    transition-property: background, background-color, box-shadow, border,
+        border-color, box-shadow-color, border-color;
+    transition-duration: 0.3s, 0.3s 0.3s 0.3s 0.3s 0.3s 0.3s;
     transition-timing-function: ease-out, ease-out, ease-out, ease-out, ease-out,
-        ease-out;
-    transition-delay: 0s, 0s, 0s, 0s, 0s, 0s;
+        ease-out ease-out;
+    transition-delay: 0s, 0s, 0s, 0s, 0s, 0s 0s;
 }
