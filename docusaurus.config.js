@@ -2,6 +2,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 const lightCodeTheme = require('prism-react-renderer/themes/github')
+const lightCodeDuotoneTheme = require('prism-react-renderer/themes/duotoneLight')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 /** @type {import('@docusaurus/types').Config} */
@@ -92,12 +93,12 @@ const config = {
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },
-                // theme: {
-                //     customCss: [
-                //         require.resolve('./src/css/custom.css'),
-                //         require.resolve('./src/css/antd.css'),
-                //     ],
-                // },
+                theme: {
+                    customCss: [
+                        // require.resolve('./src/css/custom.css'),
+                        // require.resolve('./src/css/antd.css'),
+                    ],
+                },
             }),
         ],
     ],
@@ -197,8 +198,8 @@ const config = {
                 },
             },
             prism: {
-                // theme: lightCodeTheme,
-                // darkTheme: darkCodeTheme,
+                theme: lightCodeTheme,
+                darkTheme: darkCodeTheme,
             },
         }),
 }
