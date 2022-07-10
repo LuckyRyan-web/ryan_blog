@@ -1,0 +1,36 @@
+/**
+ * @author liuyuan
+ * @date 2022-07-10 10:51
+ * @since 0.0.0
+ */
+
+.main {
+    margin-top: 12px;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    padding: 16px 20px;
+    margin: 0 auto 20px;
+    border-radius: 0.25rem;
+    background-color: var(--background-color);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    box-sizing: border-box;
+    transition: all .3s;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: var(--box-shadow-hover);
+        transform: scale(1.04);
+    }
+}
+
+.title {
+    display: inline-block;
+    position: relative;
+    line-height: 46px;
+    color: var(--ifm-font-color-base);
+    font-size: 1.28rem;
+}

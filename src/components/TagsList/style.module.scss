@@ -1,0 +1,50 @@
+/**
+ * @author liuyuan
+ * @date 2022-07-09 17:51
+ * @since 0.0.0
+ */
+.tagList {
+    display: flex;
+    flex-wrap: wrap;
+
+    > a {
+        text-decoration: none;
+    }
+}
+
+.label {
+    --black-color: #1c1e21;
+
+    padding: 4px 7px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: .25rem;
+
+    // color: var(--ifm-font-color-base);
+    color: var(--black-color);
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--ifm-code-font-size);
+    transition: .3s ease-out;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        background-color: var(--ifm-color-primary) !important;
+
+        span {
+            // color: var(--ifm-font-color-base);
+            color: #fff;
+
+            // color: var(--black-color);
+        }
+    }
+}
+
+.tag {
+    padding: 2px;
+    margin-left: 2px;
+    border-radius: .25rem;
+
+    // color: var(--ifm-font-color-base);
+}

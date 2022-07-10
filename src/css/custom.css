@@ -23,27 +23,54 @@
     --ifm-color-primary-lighter: #359962;
     --ifm-color-primary-lightest: #3cad6e; */
     --ifm-code-font-size: 95%;
-    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 10%);
+    --box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 10%);
+    --box-shadow-hover: 0 2px 16px 0 rgba(0, 0, 0, 20%);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-    --ifm-color-primary: #3678e5;
+    --ifm-color-primary: #526ecc;
+    --ifm-color-primary-dark: #3c5bc5;
+    --ifm-color-primary-darker: #3756bc;
+    --ifm-color-primary-darkest: #2e479b;
+    --ifm-color-primary-light: #6881d3;
+    --ifm-color-primary-lighter: #738ad6;
+    --ifm-color-primary-lightest: #94a6e0;
+
+    /* --ifm-color-primary: #3678e5;
     --ifm-color-primary-dark: #1d67e2;
     --ifm-color-primary-darker: #1c61d5;
     --ifm-color-primary-darkest: #1750af;
     --ifm-color-primary-light: #4f89e8;
     --ifm-color-primary-lighter: #5c91ea;
-    --ifm-color-primary-lightest: #81aaef;
+    --ifm-color-primary-lightest: #81aaef; */
 
-    /* --ifm-color-primary: #25c2a0;
-    --ifm-color-primary-dark: #21af90;
-    --ifm-color-primary-darker: #1fa588;
-    --ifm-color-primary-darkest: #1a8870;
-    --ifm-color-primary-light: #29d5b0;
-    --ifm-color-primary-lighter: #32d8b4;
-    --ifm-color-primary-lightest: #4fddbf; */
-    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 30%);
+    --box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 60%);
+    --box-shadow-hover: 0 2px 16px 0 rgba(0, 0, 0, 70%);
+}
+
+/* 紫色主题 */
+[data-theme='purple'] {
+    --ifm-color-primary: #7b69ee;
+    --ifm-color-primary-dark: #604aeb;
+    --ifm-color-primary-darker: #523be9;
+    --ifm-color-primary-darkest: #3218d8;
+    --ifm-color-primary-light: #9688f1;
+    --ifm-color-primary-lighter: #a497f3;
+    --ifm-color-primary-lightest: #ccc5f8;
+}
+
+/* 粉色主题 */
+[data-theme='pink'] {
+    --ifm-color-primary: #ec66ab;
+    --ifm-color-primary-dark: #e8489a;
+    --ifm-color-primary-darker: #e63992;
+    --ifm-color-primary-darkest: #d21a79;
+    --ifm-color-primary-light: #f084bc;
+    --ifm-color-primary-lighter: #f293c4;
+    --ifm-color-primary-lightest: #f7c0dd;
 }
 
 * {

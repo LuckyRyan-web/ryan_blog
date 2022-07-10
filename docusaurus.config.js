@@ -201,6 +201,9 @@ const config = {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
             },
+            // algolia: {
+            //     contextualSearch: true,
+            // },
         }),
 }
 

@@ -12,6 +12,8 @@ import SearchMetadata from '@theme/SearchMetadata'
 import clsx from 'clsx' // Very simple pluralization: probably good enough for now
 import type { Props } from '@theme/DocTagDocListPage'
 
+import ItemList from '@site/src/components/ItemList'
+
 function useNDocsTaggedPlural() {
     const { selectMessage } = usePluralForm()
     return (count: number) =>
@@ -43,6 +45,7 @@ function DocItem({ doc }: { doc: Props['tag']['items'][number] }): JSX.Element {
 }
 
 export default function DocTagDocListPage({ tag }: Props): JSX.Element {
+    console.log('tag', tag)
     const nDocsTaggedPlural = useNDocsTaggedPlural()
     const title = translate(
         {
@@ -81,7 +84,12 @@ export default function DocTagDocListPage({ tag }: Props): JSX.Element {
                             </header>
                             <section className="margin-vert--lg">
                                 {tag.items.map((doc) => (
-                                    <DocItem key={doc.id} doc={doc} />
+                                    <ItemList
+                                        key={doc.id}
+                                        link={doc.permalink}
+                                        name={doc.title}
+                                    />
+                                    // <DocItem key={doc.id} doc={doc} />
                                 ))}
                             </section>
                         </main>

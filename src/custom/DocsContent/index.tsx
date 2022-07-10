@@ -154,6 +154,8 @@ function DocItemContent(props: Props): JSX.Element {
 }
 
 export default function DocItem(props: Props): JSX.Element {
+    console.log('props', props)
+
     const docHtmlClassName = `docs-doc-id-${props.content.metadata.unversionedId}`
     return (
         <HtmlClassNameProvider className={docHtmlClassName}>
