@@ -9,18 +9,18 @@
 .docItemContainer article > *:first-child {
     margin-top: 0;
 }
- 
+
 @media (min-width: 997px) {
     .docItemCol {
         max-width: 75% !important;
     }
- 
+
     /* Prevent hydration FOUC, as the mobile TOC needs to be server-rendered */
     .tocMobile {
         display: none;
     }
 }
- 
+
 @media print {
     .tocMobile {
         display: none;
@@ -30,51 +30,55 @@
 .docsContent {
     div > h2 {
         display: inline-flex;
-        align-items: center;
-        font-weight: 700;
-        background: var(--ifm-color-primary);
-        color: #fff;
+        position: relative;
         padding: 3px 10px 4px;
+        padding-left: 0.8rem;
+        margin-right: 3px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.4rem;
+        background: var(--ifm-color-primary);
+        align-items: center;
         border-top-right-radius: 3px;
         border-top-left-radius: 3px;
-        margin-right: 3px;
-        position: relative;
-        padding-left: 0.8rem;
-        font-size: 1.4rem;
 
         &::before {
-            content: "";
-            border-bottom: 2px solid var(--ifm-color-primary);
-            width: 53rem;
             display: block;
-            height: 10px;
             position: absolute;
+            width: 53rem;
+            height: 10px;
             margin-top: 32px;
+            border-bottom: 2px solid var(--ifm-color-primary);
+            content: "";
         }
 
         &::after {
-            content: "";
             display: inline-block;
-            vertical-align: bottom;
-            border-bottom: 36px solid #efebe9;
-            border-right: 20px solid transparent;
             position: relative;
-            left: 32px;;
+            left: 32px;
             top: 1px;
+            border-right: 20px solid transparent;
+            border-bottom: 36px solid #efebe9;
+            content: "";
+            vertical-align: bottom;
         }
     }
 
     div > h3 {
+        color: var(--ifm-color-primary);
+
         // font-size:1.2rem;
         font-weight: bold;
-        color: var(--ifm-color-primary);
-    }
-    
-    div > p > code {
-        color: #ff502c !important;
-        background-color: #fff5f5 !important;
-        margin: 0;
-        border-radius: 3px;
     }
 
+    div > p > code {
+        margin: 0;
+        border-radius: 3px;
+        color: #ff502c !important;
+        background-color: #fff5f5 !important;
+    }
+
+    p > strong {
+        color: var(--font-strong-color);
+    }
 }

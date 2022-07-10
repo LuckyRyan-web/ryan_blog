@@ -31,7 +31,7 @@ import DocBreadcrumbs from '@theme/DocBreadcrumbs'
 import MDXContent from '@theme/MDXContent'
 import type { Props } from '@theme/DocItem'
 
-import styles from './style.module.scss'
+import style from './style.module.scss'
 import Spring from './components/Spring'
 import Sidebar from './components/Sidebar'
 
@@ -76,15 +76,15 @@ function DocItemContent(props: Props): JSX.Element {
                 className={classnames(
                     'col',
                     !hideTableOfContents &&
-                        styles.docItemCol &&
-                        styles.contentAnimation
+                        style.docItemCol &&
+                        style.contentAnimation
                 )}
             >
                 <DocVersionBanner />
                 <div
                     className={classnames(
-                        styles.docItemContainer,
-                        styles.docsContent
+                        style.docItemContainer,
+                        style.docsContent
                     )}
                 >
                     <article>
@@ -98,7 +98,7 @@ function DocItemContent(props: Props): JSX.Element {
                                 maxHeadingLevel={tocMaxHeadingLevel}
                                 className={classnames(
                                     ThemeClassNames.docs.docTocMobile,
-                                    styles.tocMobile
+                                    style.tocMobile
                                 )}
                             />
                         )}
@@ -138,13 +138,15 @@ function DocItemContent(props: Props): JSX.Element {
                 </div>
             </div>
             {renderTocDesktop && (
-                <div className="col col--3">
+                <div className={classnames('col col--3')}>
                     <Sidebar>
                         <TOC
                             toc={DocContent.toc}
                             minHeadingLevel={tocMinHeadingLevel}
                             maxHeadingLevel={tocMaxHeadingLevel}
-                            className={ThemeClassNames.docs.docTocDesktop}
+                            className={classnames(
+                                ThemeClassNames.docs.docTocDesktop
+                            )}
                         />
                     </Sidebar>
                 </div>
