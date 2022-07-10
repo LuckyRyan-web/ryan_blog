@@ -1,0 +1,57 @@
+---
+title: 20. 有效的括号 - map 解法
+hide_table_of_contents: true
+tags:
+    - 字典
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 思路
+
+这道题相对于之前的 栈写法，可以不用那么多 if 判断，直接用 map 来存储对应的 key-value 即可
+
+## 代码
+
+```ts
+function isValid(s: string): boolean {
+    if (s.length % 2 !== 0) {
+        return false
+    }
+
+    // highlight-start
+    const stack: string[] = []
+
+    // 使用 Map 来设置键值对
+    const map = new Map()
+
+    map.set('[', ']')
+    map.set('(', ')')
+    map.set('{', '}')
+    // highlight-end
+
+    for (let i = 0; i < s.length; i++) {
+        const check = s[i]
+
+        // highlight-next-line
+        if (map.has(check)) {
+            stack.push(check)
+        } else {
+            const top = stack[stack.length - 1]
+
+            // highlight-next-line
+            if (map.get(top) === check) {
+                stack.pop()
+            } else {
+                return false
+            }
+        }
+    }
+
+    return stack.length === 0
+}
+```
+
+## 复杂度分析

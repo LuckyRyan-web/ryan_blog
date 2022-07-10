@@ -1,0 +1,49 @@
+---
+title: 实现一个instanceof
+---
+
+## 题目
+
+实现一个 instanceof, 并解析原理
+
+## 原理
+
+```ts
+const obj = {}
+const func = () => {}
+const arr = []
+
+obj.__proto__ === Object.prototype
+
+func.__proto__ === Function.prototype
+func.__proto__.__proto__ === Object.prototype
+
+arr.__proto__ === Array.prototype
+arr.__proto__.__proto__ === Object.prototype
+```
+
+对象、函数、数组三个数据结构的原型链最终都是 Object
+
+如上所示，如果 `obj.__proto__ ` 能找到 `Object.prototype`， 那么 `obj.instanceof Object` 肯定为 true
+
+也就是如果 A 的原型链能找到 B 的原型对象， 那么 A instanceof B 肯定为 true
+
+拿链表的数据结构来说，只要遍历 A 的链表，能找到 B 的原型链的话，就为 true
+
+链表的遍历为 `p = p.next`，js 中也是如此 `p = p.__proto__`
+
+```ts
+const instanceof = (A, B) => {
+    let p = A
+
+    while (p) {
+        // highlight-next-line
+        if (p === B.prototype) {
+            return true
+        }
+        p = p.__proto__
+    }
+
+    return false
+}
+```

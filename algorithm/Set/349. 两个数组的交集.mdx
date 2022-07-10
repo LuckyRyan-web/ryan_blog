@@ -1,0 +1,29 @@
+---
+title: 349. 两个数组的交集 - 集合解法
+hide_table_of_contents: true
+tags:
+    - 集合
+    - 字典
+    - 双指针
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 思路
+
+题目要求每个元素必须是唯一的，且不考虑输出结果的顺序，就可以考虑 `Set` 这个数据结构
+
+```ts
+function intersection(nums1: number[], nums2: number[]): number[] {
+    const set = Array.from(new Set(nums1))
+    return Array.from(set.filter((v) => nums2.includes(v)))
+}
+```
+
+## 复杂福分析
+
+时间复杂度: filter 一次为 N， include 一次为 N，加起来为 O(N^2)
+
+空间复杂度: 就一个 set 的长度，最大就为 O(N)

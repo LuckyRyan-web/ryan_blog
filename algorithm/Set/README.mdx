@@ -1,0 +1,24 @@
+---
+title: 集合
+id: set_intro
+---
+
+import DocCardList from '@theme/DocCardList'
+import { useCurrentSidebarCategory } from '@docusaurus/theme-common'
+
+## 简介
+
+Javascript 里面是有集合这个数据结构的，也就是 `new Set`
+
+最常用过方法就是 `Array.from(new Set())` 来进行去重操作
+
+还有就是求交集的方法
+
+```ts
+const set1 = new Set([1, 2, 3])
+const set2 = new Set([2, 3, 4])
+
+const result = new Set([...set1].filter((v) => set2.has(v)))
+```
+
+<DocCardList items={useCurrentSidebarCategory().items} />
