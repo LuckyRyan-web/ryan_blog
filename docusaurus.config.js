@@ -103,6 +103,7 @@ const config = {
         ],
     ],
 
+    themes: ['@docusaurus/theme-live-codeblock'],
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
@@ -200,6 +201,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+                defaultLanguage: 'typescript',
             },
             // algolia: {
             //     contextualSearch: true,
