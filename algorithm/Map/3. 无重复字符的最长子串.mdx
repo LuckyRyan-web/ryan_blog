@@ -1,0 +1,133 @@
+---
+title: 3. 无重复字符的最长子串
+hide_table_of_contents: true
+tags:
+    - Map
+    - 双指针
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 题目解析
+
+题目中的 “子串” 的意思就是连续的字符串, "子序列" 的意思就是在字符串有的字符
+
+而题目要求的是 “最长子串”, 也就是要求不带重复的连续字符串最大值
+
+<Tabs>
+<TabItem value="1" label="双指针解法" default>
+
+## 思路
+
+依照题目的 `abcabcbb` ,可以理解为左右两个指针,左指针一开始为最左边,右指针不断的遍历,两个指针包括的部分就可以理解为一个滑动窗口
+
+以此为思想,遍历掉所有的字符串,然后记录子串的最大值就好了
+
+**核心思想为,碰到重复的字符串,左指针就往右边移动一位来达到不重复的目的**
+
+下面来模拟一下窗口滑动
+
+第一步从 0 开始移动到 `a`, 右指针往右边移动一位。左指针为 0,此时的子串为 `a`
+
+第二步从 `a` 开始移动到 `b`,右指针往右边移动一位。左指针没有遇到重复的子串,所以不动。此时子串为 `ab`
+
+第三步从 `b` 移动到 `c`,左指针不动,此时子串为 `abc`
+
+第四步从 `c` 移动到 `a`,`abca` 遇到了重复的子串 `a`,左指针往右边移动一位,此时的子串为 `bca`
+
+第五步从 `a` 移动到 `b`,`bcab` 遇到了重复的子串 `b`,左指针往右边移动一位,此时的子串为 `cab`
+
+第六步从 `b` 移动到 `c`,`cabc` 遇到了重复的子串 `c`,左指针往右边移动一位,此时的子串为 `abc`
+
+第七步从 `b` 移动到 `b`,`bcb` 遇到了重复的子串 `b`,左指针往右边移动一位,此时的子串为 `cb`
+
+第八步从 `b` 移动到 `b`,`bb` 遇到了重复的子串 `b`,左指针往右边移动一位,此时的子串为 `b`
+
+执行题目中的示例,可能出现的子串有 `ab`、`abc`、`bca`、`cab`、`abc`、`cb`、`b`
+
+## 代码
+
+```ts
+function lengthOfLongestSubstring(s: string): number {
+    // 左指针
+    let left = 0
+
+    // 最大指针的长度
+    let maxLen = 0
+
+    // 定义一个 map 来存储已经出现过的字符串
+    const map = new Map()
+
+    // 右指针需要不断的移动,需要不断的改变
+    for (let right = 0; right < s.length; right++) {
+        // 如果是遇到了重复字符串,需要把左指针往右边移动一位
+        if (map.has(s[right])) {
+            left = map.get(s[right]) + 1
+        }
+
+        // 滑动窗口, 纪录每个指针的最大值
+        maxLen = Math.max(maxLen, right - left + 1)
+
+        // 存储字符串和他的下标
+        map.set(s[right], right)
+    }
+
+    return maxLen
+}
+```
+
+以上代码提交出现了错误
+
+```ts
+input: `abba`
+output: 3
+expect: 2
+```
+
+原因是 遇到 `a` 的时候,上述代码判断成重复了,也就是变成了 `bba`
+
+此时需要加一个条件来判断数据,需要左指针,需要在滑动窗口的里面才可以，不然的话左指针遇到了重复的字符串就会跳转到比上一次还要靠前的位置, 最终代码如下
+
+```ts
+function lengthOfLongestSubstring(s: string): number {
+    // 左指针
+    let left = 0
+
+    // 最大指针的长度
+    let maxLen = 0
+
+    // 定义一个 map 来存储已经出现过的字符串
+    const map = new Map()
+
+    // 右指针需要不断的移动，需要不断的改变
+    for (let right = 0; right < s.length; right++) {
+        // highlight-start
+
+        // 如果是遇到了重复字符串，需要把左指针往右边移动一位, 且左指针需要在滑动窗口内
+        if (map.has(s[right]) && map.get(s[right]) >= left) {
+            left = map.get(s[right]) + 1
+        }
+
+        // highlight-end
+
+        // 滑动窗口, 纪录每个指针的最大值
+        maxLen = Math.max(maxLen, right - left + 1)
+
+        // 存储字符串和他的下标
+        map.set(s[right], right)
+    }
+
+    return maxLen
+}
+```
+
+## 复杂度分析
+
+时间复杂度: 只有一个 for 循环，所以时间复杂度为 O(N)
+
+空间复杂度: map 需要存储的值为字符串的没有重复子串的长度，可以理解为 O(m), m 为字符串里面没有出现过重复字符串的个数
+
+</TabItem>
+</Tabs>
