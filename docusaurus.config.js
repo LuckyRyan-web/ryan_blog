@@ -19,6 +19,7 @@ const config = {
                 // docTagDocListComponent: '@site/src/custom/docs/TagsDetail',
                 // docTagsListComponent: '@site/src/custom/docs/TagsList',
                 docItemComponent: '@site/src/custom/DocsContent',
+                remarkPlugins: [require('mdx-mermaid')],
             },
         ],
         [
@@ -60,8 +61,8 @@ const config = {
     presets: [
         [
             'classic',
-            /** @type {import('@docusaurus/preset-classic').Options} */
-            ({
+            // /** @type {import('@docusaurus/preset-classic').Options} */
+            {
                 docs: {
                     // sidebarPath: require.resolve('./sidebars.js'),
                     // sidebarCollapsed: false,
@@ -70,6 +71,7 @@ const config = {
                     // Remove this to remove the "edit this page" links.
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                    remarkPlugins: [require('mdx-mermaid')],
                 },
                 blog: {
                     showReadingTime: true,
@@ -99,7 +101,7 @@ const config = {
                         // require.resolve('./src/css/antd.css'),
                     ],
                 },
-            }),
+            },
         ],
     ],
 
@@ -197,6 +199,7 @@ const config = {
                     hideable: true,
                     autoCollapseCategories: true,
                 },
+                // remarkPlugins: [require('mdx-mermaid')],
             },
             prism: {
                 theme: lightCodeTheme,
