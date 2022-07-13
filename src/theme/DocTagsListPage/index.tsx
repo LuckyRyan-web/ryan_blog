@@ -25,6 +25,7 @@ export default function DocTagsListPage({ tags }) {
     const data = useGlobalData()
     const context = useDocusaurusContext()
 
+    console.log('global data', data)
     console.log('context', context)
     const allDocs = useMemo(() => {
         const allDocs = data['docusaurus-plugin-content-docs']['algorithm'][

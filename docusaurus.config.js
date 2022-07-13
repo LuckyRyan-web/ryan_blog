@@ -10,7 +10,7 @@ const config = {
     plugins: [
         'docusaurus-plugin-sass',
         [
-            '@docusaurus/plugin-content-docs',
+            '@ryan-liu/plugin-content-docs',
             {
                 id: 'algorithm',
                 path: 'algorithm',
@@ -23,7 +23,7 @@ const config = {
             },
         ],
         [
-            '@docusaurus/plugin-content-docs',
+            '@ryan-liu/plugin-content-docs',
             {
                 id: 'interview',
                 path: 'interview',
@@ -34,6 +34,14 @@ const config = {
                 docItemComponent: '@site/src/custom/DocsContent',
             },
         ],
+        // [
+        //     // require.resolve(
+        //     //     './src/plugins/docusaurus-plugin-extent-frontMatter/index.js'
+        //     // ),
+        //     // './src/plugins/docusaurus-plugin-extent-frontMatter/index.js',
+        //     '@ryan-liu/docusaurus-plugin-extends-frontmatter',
+        //     {},
+        // ],
     ],
     title: '小刘的博客',
     tagline: '一个勤奋的猫奴',
@@ -61,7 +69,7 @@ const config = {
     presets: [
         [
             'classic',
-            // /** @type {import('@docusaurus/preset-classic').Options} */
+            /** @type {import('@docusaurus/preset-classic').Options} */
             {
                 docs: {
                     // sidebarPath: require.resolve('./sidebars.js'),
@@ -71,7 +79,7 @@ const config = {
                     // Remove this to remove the "edit this page" links.
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-                    remarkPlugins: [require('mdx-mermaid')],
+                    // remarkPlugins: [require('mdx-mermaid')],
                 },
                 blog: {
                     showReadingTime: true,
@@ -96,10 +104,7 @@ const config = {
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },
                 theme: {
-                    customCss: [
-                        require.resolve('./src/css/custom.css'),
-                        // require.resolve('./src/css/antd.css'),
-                    ],
+                    customCss: [require.resolve('./src/css/custom.css')],
                 },
             },
         ],
@@ -151,47 +156,6 @@ const config = {
             },
             footer: {
                 style: 'dark',
-                // links: [
-                //   {
-                //     title: 'Docs',
-                //     items: [
-                //       {
-                //         label: 'Tutorial',
-                //         to: '/docs/intro',
-                //       },
-                //     ],
-                //   },
-                //   {
-                //     title: 'Community',
-                //     items: [
-                //       {
-                //         label: 'Stack Overflow',
-                //         href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-                //       },
-                //       {
-                //         label: 'Discord',
-                //         href: 'https://discordapp.com/invite/docusaurus',
-                //       },
-                //       {
-                //         label: 'Twitter',
-                //         href: 'https://twitter.com/docusaurus',
-                //       },
-                //     ],
-                //   },
-                //   {
-                //     title: 'More',
-                //     items: [
-                //       {
-                //         label: 'Blog',
-                //         to: '/blog',
-                //       },
-                //       {
-                //         label: 'GitHub',
-                //         href: 'https://github.com/facebook/docusaurus',
-                //       },
-                //     ],
-                //   },
-                // ],
                 copyright: `Copyright © ${new Date().getFullYear()} Ryan liu, Inc. Built with Docusaurus.`,
             },
             docs: {
@@ -199,7 +163,6 @@ const config = {
                     hideable: true,
                     autoCollapseCategories: true,
                 },
-                // remarkPlugins: [require('mdx-mermaid')],
             },
             prism: {
                 theme: lightCodeTheme,
