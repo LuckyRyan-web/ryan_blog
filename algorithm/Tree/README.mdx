@@ -1,0 +1,314 @@
+---
+title: 树
+id: tree_intro
+---
+
+## 简介
+
+js 是没有树这个数据结构的，但是可以用 Array 和 Object 两种数据结构来组合表示
+
+可以用如下代码来表示一个树
+
+```ts
+const tree = {
+    val: 'a',
+    children: [
+        {
+            val: 'b',
+            children: [
+                {
+                    val: 'd',
+                    children: [],
+                },
+                {
+                    val: 'e',
+                    children: [],
+                },
+            ],
+        },
+        {
+            val: 'c',
+            children: [
+                {
+                    val: 'f',
+                    children: [],
+                },
+                {
+                    val: 'g',
+                    children: [],
+                },
+            ],
+        },
+    ],
+}
+```
+
+## 深度优先遍历
+
+```bash
+└── a (1)
+    │── b (2)
+    │    ├── d (3)
+    │    └── e (4)
+    └── c (5)
+        ├── f (6)
+        │
+        └── g (7)
+```
+
+```ts
+const dfs = (root) => {
+    console.log(root.val)
+    root.children.forEach(dfs)
+}
+
+dfs(tree)
+```
+
+```
+output:
+a
+b
+d
+e
+c
+f
+g
+```
+
+深度优先遍历用了递归的思想
+
+## 广度优先遍历
+
+```bash
+└── a (1)
+    │── b (2)
+    │    ├── d (4)
+    │    └── e (5)
+    └── c (3)
+        ├── f (6)
+        │
+        └── g (7)
+```
+
+广度优先遍历需要用到队列的思想，如果是要做成如上顺序的输出
+
+1. 新建一个队列
+2. 队头出队并且访问
+3. 队头的 children 入队
+4. 以上步骤不断遍历
+
+```ts
+const bfs = (root) => {
+    const q = [root]
+    while (q.length > 0) {
+        const n = q.shift()
+        console.log(n.val)
+        n.children.forEach((v) => {
+            q.push(v)
+        })
+    }
+}
+
+bfs(tree)
+```
+
+```
+output:
+a
+b
+c
+d
+e
+f
+g
+```
+
+## 二叉树
+
+二叉树在 js 可以用对象表示
+
+```ts
+const bt = {
+    val: 1,
+    left: {
+        val: 2,
+        left: {
+            val: 4,
+            left: null,
+            right: null,
+        },
+        right: {
+            val: 5,
+            left: null,
+            right: null,
+        },
+    },
+    right: {
+        val: 3,
+        left: {
+            val: 6,
+            left: null,
+            right: null,
+        },
+        right: {
+            val: 7,
+            left: null,
+            right: null,
+        },
+    },
+}
+```
+
+### 先序遍历
+
+先序遍历就是 **根左右** 的顺序进行遍历，如下图所示
+
+```mermaid
+graph TD
+A((1))-->B((2))
+A((1))-->C((6))
+B((2))-->D((3))
+B((2))-->E((4))
+
+E((4))-->F((5))
+E((4))-->H(( ))
+
+C((6))-->G((7))
+C((6))-->I(( ))
+
+linkStyle 5 stroke:#0ff,stroke-width:0px;
+style H fill:#f100,stroke-width:0px;
+
+linkStyle 7 stroke:#0ff,stroke-width:0px;
+style I fill:#f100,stroke-width:0px;
+```
+
+案例：
+如果使用上述代码的话，使用先序遍历的代码如下
+
+```ts
+const preOrder = (root) => {
+    if (!root) {
+        return
+    }
+
+    console.log(root.val)
+    preOrder(root.left)
+    preOrder(root.right)
+}
+
+preOrder(bt)
+```
+
+```
+output:
+1
+2
+4
+5
+3
+6
+7
+
+```
+
+### 中序遍历
+
+中序遍历就是 **左根右** 的顺序进行遍历,如下图所示
+
+```mermaid
+graph TD
+A((5))-->B((2))
+A((5))-->C((6))
+
+B((2))-->D((1))
+B((2))-->E((4))
+
+E((4))-->F((3))
+E((4))-->G(( ))
+
+C((6))-->H(( ))
+C((6))-->J((7))
+
+linkStyle 5 stroke:#0ff,stroke-width:0px;
+style G fill:#f100,stroke-width:0px;
+
+linkStyle 6 stroke:#0ff,stroke-width:0px;
+style H fill:#f100,stroke-width:0px;
+```
+
+用代码表示如下：
+
+```ts
+const inOrder = (root) => {
+    if (!root) {
+        return
+    }
+
+    inOrder(root.left)
+    console.log(root.val)
+    inOrder(root.right)
+}
+```
+
+```
+output:
+4
+2
+5
+1
+6
+3
+7
+```
+
+### 后序遍历
+
+后序遍历就是 **左右根** 的顺序进行遍历,如下图所示
+
+```mermaid
+graph TD
+A((7))-->B((4))
+A((7))-->C((6))
+
+B((4))-->D((1))
+B((4))-->E((3))
+
+E((3))-->F((2))
+E((3))-->G(( ))
+
+C((6))-->H(( ))
+C((6))-->I((5))
+
+linkStyle 5 stroke:#0ff,stroke-width:0px;
+style G fill:#f100,stroke-width:0px;
+
+linkStyle 6 stroke:#0ff,stroke-width:0px;
+style H fill:#f100,stroke-width:0px;
+```
+
+代码表示如下
+
+```ts
+const postOrder = (root) => {
+    if (!root) {
+        return
+    }
+
+    postOrder(root.left)
+    postOrder(root.right)
+    console.log(root.val)
+}
+```
+
+```
+output:
+4
+5
+2
+6
+7
+3
+1
+```
