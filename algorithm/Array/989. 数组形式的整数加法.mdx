@@ -1,0 +1,97 @@
+---
+title: 989. 数组形式的整数加法
+hide_table_of_contents: true
+tags:
+    - 数组
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 思路
+
+可看到题目示例
+
+```
+输入：num = [1,2,0,0], k = 34
+输出：[1,2,3,4]
+解释：1200 + 34 = 1234
+```
+
+可以看出这道题要求数组的每一个数都相加，这道题的思想跟 [两数相加](https://leetcode.cn/problems/add-two-numbers/) 很像
+
+不过 "两数相加" 是链表的相加，这道题是要把数组的每一个数字进行相加操作，同样点都是需要存储一个十位数来给下一位递增 +1
+
+如上的示例可以看出是从数组的右边相加的，所以这次需要从数组的末尾开始往前遍历
+
+```
+...
+
+const len = num.length
+
+for (let i = len - 1; i >= 0; i--) {
+    // do something
+}
+
+...
+```
+
+第一步: 需要考虑数字位数的相加操作, `k % 10` 可以获取到个位数的数字，然后跟当前 for 循环遍历的数字进行相加操作即可
+
+第二步: 进行下一次循环的时候, k 需要进一位到十位数, 可以根据 `k / 10` 来摒弃个位数来进一位
+
+第三步: 需要考虑到第一步的两数相加大于 10 的情况。 如果是大于 10, 下一位需要加一，然后两个数相加的和需要减 10
+
+最后还需要考虑一个最后的那位数相加大于 10 的情况，比如最后一个示例
+
+```
+输入：num = [2,1,5], k = 806
+输出：[1,0,2,1]
+解释：215 + 806 = 1021
+```
+
+如果是 2 + 8 = 10，那么最后的那个 1 在上述操作的时候已经是 `10 - 10 = 0` 的情况了，最后一位还是要进 1 的，所以最后还需要判断一下 k 的值, 如果 k 是大于 1 的，就需要把多出来的数加到结果里面
+
+最后得出的代码如下:
+
+## 代码
+
+```ts
+function addToArrayForm(num: number[], k: number): number[] {
+    const res: number[] = []
+
+    // 从数组的最右边开始计算，来模拟数字相加操作
+    const len = num.length
+
+    for (let i = len - 1; i >= 0; i--) {
+        let carry = num[i] + (k % 10)
+
+        k = Math.floor(k / 10)
+
+        // 两个个位数相加最大也就是 10，所以只需要考虑 >= 10 的情况下减掉 10
+        if (carry >= 10) {
+            k++
+            carry = carry - 10
+        }
+
+        res.push(carry)
+    }
+
+    // 如果 k 还是有数字的话，就是出现了 k 大于 num 数字的情况
+    while (k > 0) {
+        res.push(k % 10)
+        k = Math.floor(k / 10)
+    }
+
+    res.reverse()
+
+    return res
+}
+```
+
+## 复杂度分析
+
+时间复杂度: for 循环的时间复杂度为 O(N), while 的循环为 logK, 所以最大为 `O(max(N, logK))`
+
+空间复杂度: 除了定义 res 之外，都是定义一个常量，所以空间复杂度为 O(1)
