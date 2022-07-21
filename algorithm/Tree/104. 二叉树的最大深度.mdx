@@ -1,0 +1,114 @@
+---
+title: 104. 二叉树的最大深度
+tags:
+    - 树
+    - 深度优先遍历
+---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 思路
+
+这一道题用深度优先遍历的思想即可
+
+这道题只需要在深度遍历的时候，顺带计算一下深度即可
+
+## 代码
+
+<Tabs>
+<TabItem value="1" label="解法1" default>
+
+深度优先遍历出整个树，记录层级即可
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+/**
+ * 深度优先遍历出整个树，记录层级即可
+ */
+
+function maxDepth(root: TreeNode | null): number {
+    let deepLen = 0
+
+    /**
+     *
+     * @param root {TreeNode | null} 树的节点
+     * @param len {number} 节点的长度
+     * @returns
+     */
+    const dfs = (root: TreeNode | null, len: number) => {
+        if (!root) {
+            return
+        }
+
+        console.log(root.val)
+
+        // 这一行不用每个遍历都判断，只需要判断是否为 “叶子节点” 即可
+        // deepLen = Math.max(deepLen, len)
+        if (!root.left && !root.right) {
+            deepLen = Math.max(deepLen, len)
+        }
+
+        dfs(root.left, len + 1)
+        dfs(root.right, len + 1)
+    }
+
+    dfs(root, 1)
+
+    return deepLen
+}
+```
+
+## 复杂度分析
+
+时间复杂度: 时间复杂度其实就是遍历最大深度，也就是 O(N), N 为树的最大深度
+
+空间复杂度: 虽然在代码里面没有线性增长的数据结构，但是在代码里面有调用堆栈,只要函数没有调用完成，存储的 `deepLen` 都是要存储在内存中的。在上述代码里面，只需要存储树的深度，最坏的情况下就是遍历出所有的树节点，也就是 也就是 O(N)
+
+</TabItem>
+
+<TabItem value="2" label="解法二">
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function maxDepth(root: TreeNode | null): number {
+    if (!root) {
+        return 0
+    }
+
+    const leftHeight = maxDepth(root.left)
+    const rightLighe = maxDepth(root.right)
+
+    return Math.max(leftHeight, rightLighe) + 1
+}
+```
+
+</TabItem>
+
+</Tabs>
