@@ -2,6 +2,8 @@
 title: 232. 用栈实现队列
 hide_table_of_contents: true
 tags:
+    - 树
+    - 栈
 ---
 
 import CodeBlock from '@theme/CodeBlock'
@@ -66,6 +68,10 @@ class MyQueue {
 
 ## 复杂度分析
 
-时间复杂度:
+-   push 的时间复杂度为 O(n),因为 push 需要把栈所有的元素都压入到另一个栈。空间复杂度为 O(1),因为只需要一个 push() 压入一个元素
 
-空间复杂度:
+-   pop 的时间复杂度为 O(n),与上面同理，需要把辅助栈 `outStack` 的所有元素 pop 到 `inStack`, 所以为 O(n), 空间复杂度为 O(1)
+
+-   peek 时间复杂度为 O(1),空间复杂度为 O(1)
+
+-   empty 时间复杂度为 O(1),空间复杂度为 O(1)
