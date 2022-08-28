@@ -98,6 +98,18 @@ function default_1(source) {
                     }
                 },
             },
+            {
+                name: 'template/md/$fileName$.md.dtpl',
+                matches: (_minimatch, source) => {
+                    if (!source.isFile) {
+                        return false;
+                    }
+                    const { fileExt } = source.basicData;
+                    if (fileExt.indexOf('md') !== -1) {
+                        return true;
+                    }
+                },
+            },
         ],
         globalData: {
             projectName: 'blog-vite',

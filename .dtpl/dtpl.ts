@@ -133,6 +133,23 @@ export default function (source: _.Source): _.IDtplConfig {
                     }
                 },
             },
+            {
+                name: 'template/md/$fileName$.md.dtpl',
+                matches: (
+                    _minimatch: _.IMinimatchFunction,
+                    source: _.Source
+                ) => {
+                    if (!source.isFile) {
+                        return false
+                    }
+
+                    const { fileExt } = source.basicData
+
+                    if (fileExt.indexOf('md') !== -1) {
+                        return true
+                    }
+                },
+            },
         ],
 
         globalData: {
