@@ -1,0 +1,60 @@
+---
+title: proxy
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+```ts
+const obj = {
+    name: 'copyer',
+    age: 12,
+}
+
+const objProxy = new Proxy(obj, {
+    get: function (target, key, receiver) {
+        console.log('get捕获器')
+        return Reflect.get(target, key)
+    },
+    set: function (target, key, newValue, receiver) {
+        console.log('set捕获器')
+        return Reflect.set(target, key, newValue)
+    },
+    has: function (target, key) {
+        console.log('has捕获器')
+        return Reflect.has(target, key)
+    },
+    deleteProperty: function (target, key) {
+        console.log('deleteProperty捕获器')
+        return Reflect.deleteProperty(target, key)
+    },
+    getPrototypeOf: function (target) {
+        console.log('getPrototypeOf捕获器')
+        return Reflect.getPrototypeOf(target)
+    },
+    setPrototypeOf: function (target, newObj) {
+        return Reflect.setPrototypeOf(target, newObj)
+    },
+    isExtensible: function (target) {
+        console.log('isExtensible捕获器')
+        return Reflect.isExtensible(target)
+    },
+    preventExtensions: function (target) {
+        console.log('preventExtensions捕捉器')
+        return Reflect.preventExtensions(target)
+    },
+    getOwnPropertyDescriptor: function (target, key) {
+        console.log('getOwnPropertyDescriptor捕捉器')
+        return Reflect.getOwnPropertyDescriptor(target, key)
+    },
+    defineProperty: function (target, key, obj) {
+        console.log('defineProperty捕捉器')
+        return Reflect.defineProperty(target, key, obj)
+    },
+    ownKeys: function (target) {
+        console.log('ownKeys捕捉器')
+        return Reflect.ownKeys(target)
+    },
+})
+```
