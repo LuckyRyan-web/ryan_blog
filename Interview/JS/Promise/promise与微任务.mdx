@@ -1,0 +1,45 @@
+---
+title: promise 与 微任务
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+:::tip
+
+来源于 V8 源码解析： https://juejin.cn/post/6953452438300917790
+
+:::
+
+```js
+Promise.resolve()
+    .then(() => {
+        console.log(0)
+        return Promise.resolve(4)
+    })
+    .then((res) => {
+        console.log(res)
+    })
+
+Promise.resolve()
+    .then(() => {
+        console.log(1)
+    })
+    .then(() => {
+        console.log(2)
+    })
+    .then(() => {
+        console.log(3)
+    })
+    .then(() => {
+        console.log(5)
+    })
+    .then(() => {
+        console.log(6)
+    })
+```
+
+output: 0 1 2 3 4 5 6
+
+原因是原生的 Promise 是创建了两次的微任务
