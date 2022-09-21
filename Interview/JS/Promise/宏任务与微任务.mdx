@@ -1,0 +1,347 @@
+---
+title: 宏任务与微任务
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+:::tip
+
+参考文章: https://juejin.cn/post/6880787856353132552
+
+:::
+
+## 宏任务和微任务到底是什么
+
+两者其实都是异步, 可以简单的说是与 **定时器** 相关的都是宏任务。 复杂的说可以说是 **进程切换的都是宏任务，因为消耗了大量的资源，线程切换相关的都是微任务**
+
+详细的说线程的切换，是因为纤程的切换导致的, 类似 js 里面的 async await，因为 `async await` 本身是一个迭代器，迭代器利用了线程
+
+宏任务有: `scrip(JS 整体代码)、setTimeout、setInterval、setImmediate、I/O、UI 交互、Ajax、DOM` 还有其他设计成不被 js 阻塞的，会单独开启一个进程进行管理的都是宏任务
+
+微任务有: `Promise(重点关注)、process.nextTick(Node.js)、MutaionObserver（也就是观察的 DOM 的，不是 DOM 操作本身）`
+
+:::info
+
+1. 为什么定时器相关的都是宏任务呢？
+
+因为计时任务是实时的，不可以被阻塞，所以定时器要放到另一个进程被管理,一般是 `setTimeout，setInterval、setImmediate`
+
+2. 事件之类的为什么是微任务呢?
+
+简单的说，事件触发依赖于浏览器实现，浏览器有自己的事件注册和分发机制，不会与 js 存在于同一个进程中， 事件会有属于自己的单独进程，也就是 `MutationObserver`
+
+MutationObserver 是观察 DOM，对 DOM 的变化作出自己的响应，所以会在专门的 DOM 管理进程中，不会进行进程的切换
+
+渲染之类的也一样，属于自己本身的进程中，等待自己进程的队列执行
+
+:::
+
+:::tip
+
+微任务在执行的时候，可以获取到任务之外的上下文。而宏任务在执行的时候，获取不到任务之外的上下文
+
+:::
+
+## 执行顺序
+
+**先执行微任务再执行宏任务**
+
+可以这么理解，微任务因为是在线程里面，所以执行快一点。宏任务切换是要在进程之间切换，需要花费时间，所以慢一点。
+
+微任务不需要执行上下文， 可以在上下文切换的间隔，就把微任务处理掉
+
+## 代码演示
+
+### 题目 1
+
+```ts
+// 宏任务
+setTimeout(function () {
+    console.log('1')
+})
+
+new Promise(function (resolve) {
+    // 主线程任务
+    console.log('2')
+    resolve()
+}).then(function () {
+    // 微任务
+    console.log('3')
+})
+
+// 主线程任务
+console.log('4')
+```
+
+output: 2 4 3 1
+
+setTimeout 是宏任务，会等微任务都执行完成才去执行
+
+### 题目 2
+
+```ts
+setTimeout(() => {
+    //宏任务队列1
+    console.log('1') //宏任务队1的任务1
+
+    setTimeout(() => {
+        //宏任务队列3(宏任务队列1中的宏任务)
+        console.log('2')
+    }, 0)
+
+    new Promise((resolve) => {
+        resolve()
+        console.log('3') //宏任务队列1的任务2
+    }).then(() => {
+        //宏任务队列1中的微任务
+        console.log('4')
+    })
+}, 0)
+
+setTimeout(() => {
+    //宏任务队列2
+    console.log('5')
+}, 0)
+
+console.log('6') //同步主线程
+```
+
+output: 6 1 3 4 5 2
+
+第一轮的输出肯定是同步任务的 6，遇到两个 `setTimeout` 宏任务,放到队列执行
+
+第二轮对两个宏任务进行顺序执行，先输出 1 ，遇到了下一个 `setTimeout`， 放到下一个宏任务队列中。然后遇到构造函数的同步任务，输入 3，then 方法为微任务，放到微任务的队列中。然后执行到下个宏任务 5，放到宏任务队列。此时只有一个微任务和宏任务的队列（包含下一个宏任务 2），输出微任务 4
+
+然后只剩一个宏任务（里面包含另一个宏任务），也就是输出外层的 5 ，最后输出 2
+
+### 题目 3
+
+```ts
+console.log('1')
+
+setTimeout(function () {
+    console.log('2')
+
+    setTimeout(() => {
+        console.log('3')
+    })
+
+    new Promise(function (resolve) {
+        console.log('4')
+        resolve()
+    }).then(function () {
+        console.log('5')
+    })
+})
+
+setTimeout(() => {
+    console.log(6)
+})
+
+new Promise(function (resolve) {
+    console.log('7')
+    resolve()
+}).then(function () {
+    console.log('8')
+})
+
+setTimeout(function () {
+    console.log('9')
+
+    setTimeout(() => {
+        console.log('10')
+    })
+
+    new Promise(function (resolve) {
+        console.log('11')
+        resolve()
+    }).then(function () {
+        console.log('12')
+    })
+})
+```
+
+output: 1 7 8 2 4 5 6 9 11 12 3 10
+
+原理与上述相同
+
+### 题目 4
+
+async await
+
+async 和 await 其实就是 Generator 和 Promise 的语法糖
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+}
+```
+
+用 promise 翻译过来就是
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    Promise.resolve(async2()).then(() => console.log('async1 end'))
+}
+```
+
+例子如下:
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+}
+
+async function async2() {
+    console.log('async2')
+}
+
+async1()
+
+setTimeout(() => {
+    console.log('timeout')
+}, 0)
+
+new Promise(function (resolve) {
+    console.log('promise1')
+    resolve()
+}).then(function () {
+    console.log('promise2')
+})
+
+console.log('script end')
+```
+
+output:
+
+```
+async1 start
+
+async2
+
+promise1
+
+script end
+
+async1 end
+
+promise2
+
+timeout
+
+```
+
+因为上述代码翻译过来就是
+
+```ts
+async function async1() {
+    console.log('async1 start')
+
+    Promise.resolve(() => {
+        console.log('async2')
+    }).then(() => {
+        console.log('async1 end')
+    })
+}
+
+async1()
+
+setTimeout(() => {
+    console.log('timeout')
+}, 0)
+
+new Promise(function (resolve) {
+    console.log('promise1')
+    resolve()
+}).then(function () {
+    console.log('promise2')
+})
+
+console.log('script end')
+```
+
+函数在调用的时候才会被执行
+
+输出顺序也就是先输出同步任务的 `async1 start` 、`async2`、`promise1`、 `script end`
+
+然后输出两个 `then` 微任务 `async1 end` 、 `promise2`
+
+最后才是宏任务的 `timeout`
+
+### 题目 5
+
+如果把上述代码改成 node 环境的 nextTick
+
+```js
+console.log('1')
+
+setTimeout(function () {
+    console.log('2')
+
+    process.nextTick(function () {
+        console.log('3')
+    })
+
+    new Promise(function (resolve) {
+        console.log('4')
+        resolve()
+    }).then(function () {
+        console.log('5')
+    })
+})
+
+process.nextTick(function () {
+    console.log('6')
+})
+
+new Promise(function (resolve) {
+    console.log('7')
+    resolve()
+}).then(function () {
+    console.log('8')
+})
+
+setTimeout(function () {
+    console.log('9')
+
+    process.nextTick(function () {
+        console.log('10')
+    })
+
+    new Promise(function (resolve) {
+        console.log('11')
+        resolve()
+    }).then(function () {
+        console.log('12')
+    })
+})
+```
+
+output: 1 7 6 8 2 4 3 5 9 11 10 12
+
+`process.nextTick` 是一个微任务
+
+### 题目 6
+
+如果是两个宏任务，就依靠于自己的时间延时去执行
+
+```ts
+setTimeout(() => {
+    console.log('1')
+}, 1000)
+
+setTimeout(() => {
+    console.log('2')
+}, 1000)
+
+setInterval(() => {
+    console.log('setInterval')
+}, 1000)
+```
