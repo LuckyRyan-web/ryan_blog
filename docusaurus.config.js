@@ -156,7 +156,7 @@ const config = {
             },
             footer: {
                 style: 'dark',
-                copyright: `Copyright © ${new Date().getFullYear()} Ryan liu, Inc. Built with Docusaurus.`,
+                copyright: `Copyright © ${new Date().getFullYear()} Ryan liu, Inc. Built with Docusaurus. <br/> <a href="https://beian.miit.gov.cn/" target="_blank" >粤ICP备2022091428号-1</a>`,
             },
             docs: {
                 sidebar: {
