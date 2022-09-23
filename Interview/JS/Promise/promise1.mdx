@@ -1,0 +1,138 @@
+---
+title: promise基础(1)
+draft: true
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+:::tip
+
+文章来源: https://juejin.cn/post/6844904077537574919
+
+:::
+
+## 1
+
+```ts
+const promise1 = new Promise((resolve, reject) => {
+    console.log('promise1')
+})
+console.log('1', promise1)
+```
+
+output:
+
+```
+'promise1'
+'1' Promise{<pending>}
+```
+
+原因: 先执行构造函数里面的代码，到 1 的时候还在 pending
+
+## 2
+
+```ts
+const promise = new Promise((resolve, reject) => {
+    console.log(1)
+    resolve('success')
+    console.log(2)
+})
+promise.then(() => {
+    console.log(3)
+})
+console.log(4)
+```
+
+output: 1 2 4 3
+
+先执行 1 ，遇到了 `resolve('success')` 代表状态被改变了，然后执行 2，遇到了 then() 方法后，放到微任务的队列中，然后执行 4 。宏任务执行完成的时候再执行 3
+
+## 3
+
+```ts
+const promise = new Promise((resolve, reject) => {
+    console.log(1)
+    console.log(2)
+})
+promise.then(() => {
+    console.log(3)
+})
+console.log(4)
+```
+
+output: 1 2 4
+
+与上面的相似，但是没有 `resolve()` ，所以 promise 的状态是没有改变的，3 不会执行到，也就是 promise 一直在 pending，所以输入为 1 2 4
+
+## 4
+
+```ts
+const promise1 = new Promise((resolve, reject) => {
+    console.log('promise1')
+    resolve('resolve1')
+})
+const promise2 = promise1.then((res) => {
+    console.log(res)
+})
+console.log('1', promise1)
+console.log('2', promise2)
+```
+
+output:
+
+```ts
+'promise1'
+'1' Promise{<resolved>: 'resolve1'}
+'2' Promise{<pending>}
+'resolve1'
+```
+
+因为 resolve() 的时候把状态改成 resolved 了
+
+## 5
+
+```ts
+const fn = () =>
+    new Promise((resolve, reject) => {
+        console.log(1)
+        resolve('success')
+    })
+fn().then((res) => {
+    console.log(res)
+})
+console.log('start')
+```
+
+output
+
+```
+1
+start
+success
+```
+
+`fu().then()` 会先执行 `fn()` 的函数
+
+## 6
+
+```ts
+const fn = () =>
+    new Promise((resolve, reject) => {
+        console.log(1)
+        resolve('success')
+    })
+console.log('start')
+fn().then((res) => {
+    console.log(res)
+})
+```
+
+output:
+
+```
+'start'
+1
+'success'
+```

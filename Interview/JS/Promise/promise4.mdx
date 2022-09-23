@@ -1,0 +1,388 @@
+---
+title: promise4(async await)
+draft: true
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+:::tip
+
+文章来源: https://juejin.cn/post/6844904077537574919#heading-33
+
+:::
+
+### 1
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+}
+async function async2() {
+    console.log('async2')
+}
+async1()
+console.log('start')
+```
+
+output:
+
+```
+'async1 start'
+'async2'
+'start'
+'async1 end'
+```
+
+翻译成 promise 代码应该是
+
+```ts
+async function async1() {
+    console.log('async1 start')
+
+    new Promise((reslove) => {
+        console.log('async2')
+        reslove()
+    }).then((res) => {
+        console.log('async1 end')
+    })
+}
+
+async function async2() {
+    console.log('async2')
+}
+async1()
+console.log('start')
+```
+
+也就是说把 then 方法的微任务放到下一轮，所以 async2 最后输出
+
+### 2
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+}
+async function async2() {
+    setTimeout(() => {
+        console.log('timer')
+    }, 0)
+    console.log('async2')
+}
+async1()
+console.log('start')
+```
+
+output:
+
+```
+async1 start
+async2
+start
+async1 end
+timer
+```
+
+### 3
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+    setTimeout(() => {
+        console.log('timer1')
+    }, 0)
+}
+async function async2() {
+    setTimeout(() => {
+        console.log('timer2')
+    }, 0)
+    console.log('async2')
+}
+async1()
+setTimeout(() => {
+    console.log('timer3')
+}, 0)
+console.log('start')
+```
+
+output:
+
+```
+async1 start
+async2
+start
+async1 end
+timer2
+timer3
+timer1
+```
+
+### 4
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await new Promise((resolve) => {
+        console.log('promise1')
+    })
+    console.log('async1 success')
+    return 'async1 end'
+}
+console.log('srcipt start')
+async1().then((res) => console.log(res))
+console.log('srcipt end')
+```
+
+output:
+
+```
+'script start'
+'async1 start'
+'promise1'
+'script end'
+```
+
+await 后的 promise 是没有返回值的，也就是状态都始终为 pending
+
+### 5
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await new Promise((resolve) => {
+        console.log('promise1')
+        resolve('promise1 resolve')
+    }).then((res) => console.log(res))
+    console.log('async1 success')
+    return 'async1 end'
+}
+console.log('srcipt start')
+async1().then((res) => console.log(res))
+console.log('srcipt end')
+```
+
+output:
+
+```
+srcipt start
+async1 start
+promise1
+script end
+promise1 resolve
+async1 success
+'async1 end'
+```
+
+### 6
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await new Promise((resolve) => {
+        console.log('promise1')
+        resolve('promise resolve')
+    })
+    console.log('async1 success')
+    return 'async1 end'
+}
+console.log('srcipt start')
+async1().then((res) => {
+    console.log(res)
+})
+new Promise((resolve) => {
+    console.log('promise2')
+    setTimeout(() => {
+        console.log('timer')
+    })
+})
+```
+
+output:
+
+```
+srcipt start
+async1 start
+promise1
+promise2
+async1 success
+async1 end
+timer
+```
+
+### 7
+
+```ts
+async function async1() {
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+}
+
+async function async2() {
+    console.log('async2')
+}
+
+console.log('script start')
+
+setTimeout(function () {
+    console.log('setTimeout')
+}, 0)
+
+async1()
+
+new Promise(function (resolve) {
+    console.log('promise1')
+    resolve()
+}).then(function () {
+    console.log('promise2')
+})
+console.log('script end')
+```
+
+output:
+
+```
+script start
+async1 start
+async2
+promise1
+script end
+async1 end
+promise2
+setTimeout
+```
+
+### 8
+
+```ts
+async function testSometing() {
+    console.log('执行testSometing')
+    return 'testSometing'
+}
+
+async function testAsync() {
+    console.log('执行testAsync')
+    return Promise.resolve('hello async')
+}
+
+async function test() {
+    console.log('test start...')
+    const v1 = await testSometing()
+    console.log(v1)
+    const v2 = await testAsync()
+    console.log(v2)
+    console.log(v1, v2)
+}
+
+test()
+
+var promise = new Promise((resolve) => {
+    console.log('promise start...')
+    resolve('promise')
+})
+
+promise.then((val) => console.log(val))
+
+console.log('test end...')
+```
+
+output:
+
+```
+'test start...'
+'执行testSometing'
+'promise start...'
+'test end...'
+'testSometing'
+'执行testAsync'
+'promise'
+'hello async'
+'testSometing' 'hello async'
+```
+
+### 9
+
+```ts
+async function async1() {
+    await async2()
+    console.log('async1')
+    return 'async1 success'
+}
+async function async2() {
+    return new Promise((resolve, reject) => {
+        console.log('async2')
+        reject('error')
+    })
+}
+async1().then((res) => console.log(res))
+```
+
+output:
+
+```
+async2
+error
+```
+
+reject 之后不会继续执行下一步
+
+### 10
+
+```ts
+async function async1() {
+    try {
+        await Promise.reject('error!!!')
+        console.log('catch error')
+    } catch (e) {
+        console.log(e)
+    }
+    console.log('async1')
+    return Promise.resolve('async1 success')
+}
+async1().then((res) => console.log(res))
+console.log('script start')
+```
+
+output:
+
+```
+'script start'
+'error!!!'
+'async1'
+'async1 success'
+```
+
+try catch 不会影响之后的代码执行
+
+```ts
+async function async1() {
+    // try {
+    //   await Promise.reject('error!!!')
+    // } catch(e) {
+    //   console.log(e)
+    // }
+    await Promise.reject('error!!!').catch((e) => console.log(e))
+    console.log('async1')
+    return Promise.resolve('async1 success')
+}
+async1().then((res) => console.log(res))
+console.log('script start')
+```
+
+output:
+
+```
+'script start'
+'error!!!'
+'async1'
+'async1 success'
+```
+
+或者是 reject catch
