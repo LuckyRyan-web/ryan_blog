@@ -1,0 +1,49 @@
+---
+title: 防抖函数
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 防抖函数是什么
+
+防抖函数就是一个单位时间内，如果再次触发就会清除掉上一次的交互
+
+好比如 20 秒内有 20 次的点击事件，那么只有最后一次才会真正触发到事件，前 19 次都是无用的
+
+比如输入框，一直在输入查询字符串，但是只需要 200ms 查询一次就可以了，不然会每输入一次字符串都会进行查询数据，就会发送到很多请求
+
+如下伪代码
+
+```ts
+let timer = undefined
+
+const search = () => {
+    clearTimeout(timer)
+
+    timer = setTimeout(async () => {
+        let result = await getData()
+        // do something
+    }, 200)
+}
+```
+
+## 封装一个防抖函数
+
+```ts
+function throttle(fn: Function, wait: number) {
+    let timer: NodeJS.Timeout | null = null
+
+    return function () {
+        let arfs = arguments
+
+        if (!timer) {
+            timer = setTimeout(() => {
+                timer = null
+                fn.apply(this, arfs)
+            }, wait)
+        }
+    }
+}
+```
