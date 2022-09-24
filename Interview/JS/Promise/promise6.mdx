@@ -1,0 +1,276 @@
+---
+title: promise6（大厂面试题）
+draft: true
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+:::tip
+
+本文参考来源: https://juejin.cn/post/6844904077537574919#heading-49
+
+:::
+
+### 1 （使用 Promise 实现每隔 1 秒输出 1,2,3）
+
+```ts
+const arr = [1, 2, 3]
+arr.reduce((previous, current) => {
+    return previous.then(() => {
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(console.log(current)), 1000)
+        })
+    })
+}, Promise.resolve())
+```
+
+output: 依次输出 1 2 3
+
+### 2
+
+```ts
+const arr = [1, 2, 3]
+const result = arr.reduce(
+    (p, x) =>
+        p.then(
+            new Promise((resolve) =>
+                setTimeout(() => resolve(console.log(x)), 1000)
+            )
+        ),
+    Promise.resolve()
+)
+```
+
+output: 同时输出 1 2 3
+
+就算发生了透传, then 的代码依然会被执行
+
+上面这段代码的意思就是执行队列里面有三个延时为 1 的打印
+
+### 3（使用 Promise 实现红绿灯交替重复亮）
+
+题目:
+
+```ts
+function red() {
+    console.log('red')
+}
+
+function green() {
+    console.log('green')
+}
+
+function yellow() {
+    console.log('yellow')
+}
+```
+
+要求红绿灯依次轮流输出
+
+```ts
+function red() {
+    console.log('red')
+}
+
+function green() {
+    console.log('green')
+}
+
+function yellow() {
+    console.log('yellow')
+}
+
+const light = function (timer, cb) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            cb()
+            resolve()
+        }, timer)
+    })
+}
+
+const step = function () {
+    Promise.resolve()
+        .then(() => {
+            return light(3000, red)
+        })
+        .then(() => {
+            return light(2000, green)
+        })
+        .then(() => {
+            return light(1000, yellow)
+        })
+        .then(() => {
+            return step()
+        })
+}
+
+step()
+```
+
+output:
+
+下面这三个结果依次输出
+
+```
+red
+green
+yellow
+```
+
+### 4
+
+要求编写 mergePromise 代码，要求代码按照先后顺序执行得到的结果存到数组中
+
+```ts
+const time = (timer) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve()
+        }, timer)
+    })
+}
+const ajax1 = () =>
+    time(2000).then(() => {
+        console.log(1)
+        return 1
+    })
+const ajax2 = () =>
+    time(1000).then(() => {
+        console.log(2)
+        return 2
+    })
+const ajax3 = () =>
+    time(1000).then(() => {
+        console.log(3)
+        return 3
+    })
+
+function mergePromise() {
+    // 在这里写代码
+}
+
+mergePromise([ajax1, ajax2, ajax3]).then((data) => {
+    console.log('done')
+    console.log(data) // data 为 [1, 2, 3]
+})
+
+// 要求分别输出
+// 1
+// 2
+// 3
+// done
+// [1, 2, 3]
+```
+
+```ts
+function mergePromise(ajaxArray) {
+    // 存放每个ajax的结果
+    const data = []
+    let promise = Promise.resolve()
+    ajaxArray.forEach((ajax) => {
+        // 第一次的then为了用来调用ajax
+        // 第二次的then是为了获取ajax的结果
+        promise = promise.then(ajax).then((res) => {
+            data.push(res)
+            return data // 把每次的结果返回
+        })
+    })
+    // 最后得到的promise它的值就是data
+    return promise
+}
+```
+
+### 5（封装一个异步加载图片的方法）
+
+```ts
+function loadImg(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.onload = function () {
+            console.log('一张图片加载完成')
+            resolve(img)
+        }
+        img.onerror = function () {
+            reject(new Error('Could not load image at' + url))
+        }
+        img.src = url
+    })
+}
+```
+
+### 6（限制异步操作的并发个数并尽可能快的完成全部）
+
+题目:
+
+```ts
+var urls = [
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/AboutMe-painting1.png',
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/AboutMe-painting2.png',
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/AboutMe-painting3.png',
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/AboutMe-painting4.png',
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/AboutMe-painting5.png',
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/bpmn6.png',
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/bpmn7.png',
+    'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/bpmn8.png',
+]
+function loadImg(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.onload = function () {
+            console.log('一张图片加载完成')
+            resolve(img)
+        }
+        img.onerror = function () {
+            reject(new Error('Could not load image at' + url))
+        }
+        img.src = url
+    })
+}
+```
+
+```ts
+function limitLoad(urls, handler, limit) {
+    let sequence = [].concat(urls) // 复制urls
+    // 这一步是为了初始化 promises 这个"容器"
+    let promises = sequence.splice(0, limit).map((url, index) => {
+        return handler(url).then(() => {
+            // 返回下标是为了知道数组中是哪一项最先完成
+            return index
+        })
+    })
+
+    // 注意这里要将整个变量过程返回，这样得到的就是一个Promise，可以在外面链式调用
+    return sequence
+        .reduce((pCollect, url) => {
+            return pCollect
+                .then(() => {
+                    return Promise.race(promises) // 返回已经完成的下标
+                })
+                .then((fastestIndex) => {
+                    // 获取到已经完成的下标
+                    // 将"容器"内已经完成的那一项替换
+                    promises[fastestIndex] = handler(url).then(() => {
+                        return fastestIndex // 要继续将这个下标返回，以便下一次变量
+                    })
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+        }, Promise.resolve()) // 初始化传入
+        .then(() => {
+            // 最后三个用.all来调用
+            return Promise.all(promises)
+        })
+}
+limitLoad(urls, loadImg, 3)
+    .then((res) => {
+        console.log('图片全部加载完毕')
+        console.log(res)
+    })
+    .catch((err) => {
+        console.error(err)
+    })
+```
