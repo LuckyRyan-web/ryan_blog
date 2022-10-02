@@ -1,0 +1,138 @@
+---
+title: 主题换肤
+slug: theme-color
+draft: true
+tags:
+    - 实践
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 自定义 CSS 变量来切换主题
+
+其实就是 CSS 写好几套的颜色值，并且通过 html 根元素的属性值去切换
+
+### 方法一：
+
+在 `main.ts` 之类的根文件引入的 css 文件下引入一套颜色变量
+
+```css
+:root {
+    --theme-color: #333;
+    --theme-background: #eee;
+}
+
+.dark {
+    --theme-color: #eee;
+    --theme-background: #333;
+}
+
+.pink {
+    --theme-color: #fff;
+    --theme-background: pink;
+}
+```
+
+使用方法如下，对于颜色变量之类的都用 var 的方法使用
+
+```css
+.App {
+    max-width: 1280px;
+    padding: 2rem;
+    margin: 0 auto;
+    background-color: var(--theme-background);
+    text-align: center;
+}
+
+.text {
+    width: 200px;
+    height: 200px;
+    color: var(--theme-color);
+}
+```
+
+切换方式如下:
+
+```tsx
+<div>
+    <button
+        onClick={() => {
+            document.body.className = ''
+        }}
+    >
+        默认主题
+    </button>
+    <button
+        onClick={() => {
+            document.body.className = 'dark'
+        }}
+    >
+        黑色主题
+    </button>
+    <button
+        onClick={() => {
+            document.body.className = 'pink'
+        }}
+    >
+        粉色主题
+    </button>
+</div>
+```
+
+### 方法二：
+
+css 变量定义方法如下:
+
+```css
+[data-theme='dark'] {
+    --theme-color: #eee;
+    --theme-background: #333;
+}
+
+[data-theme='pink'] {
+    --theme-color: #fff;
+    --theme-background: pink;
+}
+```
+
+```tsx
+<div>
+    <button
+        onClick={() => {
+            document.documentElement.setAttribute('data-theme', '')
+        }}
+    >
+        默认主题
+    </button>
+    <button
+        onClick={() => {
+            document.documentElement.setAttribute('data-theme', 'dark')
+        }}
+    >
+        黑色主题
+    </button>
+    <button
+        onClick={() => {
+            document.documentElement.setAttribute('data-theme', 'pink')
+        }}
+    >
+        粉色主题
+    </button>
+</div>
+```
+
+### 其他方法
+
+剩余的方法无非是动态的设置属性
+
+```ts
+document.documentElement.style['--el-color-primary'] = 'red'
+
+document.documentElement.style.getPropertyValue('--theme-color')
+
+document.documentElement.style.setProperty('--el-color-primary', 'red')
+```
+
+## 根据主色调自动生成次级色调
