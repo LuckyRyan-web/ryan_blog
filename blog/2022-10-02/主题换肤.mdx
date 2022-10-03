@@ -136,3 +136,20 @@ document.documentElement.style.setProperty('--el-color-primary', 'red')
 ```
 
 ## 根据主色调自动生成次级色调
+
+根据主色生成其他的次级色彩，可以采用 scss 的 tint 方法，案例如下
+
+```scss
+$color-primary: #2c77f4;
+
+// ********************
+// * 主色
+// ********************
+--color-primary: #{$color-primary};
+
+@each $var in 1, 2, 3, 4, 5, 6, 7, 8, 9 {
+    --color-primary-light-#{$var}: #{tint($color-primary, $var * 10%)};
+}
+```
+
+其余的类似 `color-primary-1`、`color-primary-2`等等之类的，也可以用 rgba 等色彩，加上透明度来实现
