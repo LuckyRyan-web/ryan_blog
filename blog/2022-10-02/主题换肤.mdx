@@ -135,6 +135,26 @@ document.documentElement.style.getPropertyValue('--theme-color')
 document.documentElement.style.setProperty('--el-color-primary', 'red')
 ```
 
+## 定义组合的 mixins 变量
+
+```scss
+@mixin bg_color() {
+    background: $background-color-theme;
+    [data-theme='theme1'] & {
+        background: $background-color-theme1;
+    }
+    [data-theme='theme2'] & {
+        background: $background-color-theme2;
+    }
+}
+
+// do somethings
+
+.test {
+    @include bg_color;
+}
+```
+
 ## 根据主色调自动生成次级色调
 
 根据主色生成其他的次级色彩，可以采用 scss 的 tint 方法，案例如下
