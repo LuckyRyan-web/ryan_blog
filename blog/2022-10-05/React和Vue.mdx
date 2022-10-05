@@ -1,0 +1,57 @@
+---
+title: React 和 Vue 的不同点
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+讲解 React 和 Vue 的不同点
+
+<!--truncate-->
+
+:::tip
+本文引用如下文章：
+[程序员成长指北](https://jishuin.proginn.com/p/763bfbd54ab9)
+[为什么 React 的 Diff 算法不采用 Vue 的双端对比算法？](https://juejin.cn/post/7116141318853623839#heading-4)
+:::
+
+## 组件化的差异
+
+其实就是 React 推崇 JSX 的语法（当然 Vue 也可以用 JSX）语法。
+
+React 推崇单项数据流的写法，一切值都从根组件进行传递。而 Vue 推崇双向绑定的写法。
+
+这种核心思想的差异导致小项目用 Vue 比较顺手，毕竟组件的层级不深；对于大项目而言，单项数据流的思想可以保持写法思路清晰，一切改变都在根组件的实现。
+
+React 在组件化的设计中，会把 HTML、CSS 都写在 JavaScript 中，即 all in js；Vue 推崇 template 的单文件写法。
+
+## 虚拟 DOM 的区别
+
+### 虚拟 DOM 是什么
+
+1. 虚拟 DOM 就是一个 JS 的对象
+2. 虚拟 DOM 跟真实 DOM 存在一个映射关系
+3. 数据变化的时候，根据虚拟 DOM 和真实 DOM 的对比得出差异，然后 Diff 算法把差异的 DOM 对象进行更新，以此来减少 DOM 的操作
+
+### 相同点
+
+不论是 Vue 还是 React 都使用了 Virtual DOM + Diff 算法， Vue 和 React 最后都会生成一个 render 函数，render 函数执行返回 VNode。每一次 UI 更新的时候都会根据新老的 Virtual DOM 进行对比从而使用 Diff 算法去更新真实 DOM
+
+相同的 tag 和 节点的 key 相同的话就认为是同一个节点，也就是每一个节点都是一个 key value 的结构
+
+并且两者都不会垮层级进行比较
+
+### 不同点
+
+十分简略的说， Vue 采用的是双端对比法，React 采用的是从左到右进行查找对比，同样的情况下可以减少移动节点的次数，减少不必要的性能开销。
+
+### 更新策略的不同点
+
+发生更新的时候， react 会自顶向下的进行全部 diff。vue 会跟踪每一个组件的依赖关系，只需要进行局部的比对。
+
+## 视图驱动的不同
+
+Vue 是 MVVM ，即 Model、View、ViewModel ，ViewModel 是视图驱动的核心，也就是 v-model 进行数据的监听与改动
+
+React 都是通过 useState 进行视图驱动的改动，通过 setState 来引发组件的更新从而实现页面的重新渲染，React 会根据任务轮训来计算什么时候更新是最优的。
