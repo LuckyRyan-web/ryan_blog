@@ -1,0 +1,21 @@
+---
+title: 远程加载组件的方式
+slug: remote-compoents
+draft: true
+tags:
+    - 工程化
+---
+
+简单的讲解远程组件加载的几种方式
+
+<!--truncate-->
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+:::tip
+文章思想参考于政采云前端：[浅谈低代码平台远程组件加载方案](https://mp.weixin.qq.com/s/cBWFpDdGutow59RpeSALAA)
+:::
+
+## 方案一：把组件放到 cdn 上，然后放到全局变量上
