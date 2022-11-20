@@ -1,0 +1,15 @@
+---
+title: 浏览器重绘与重排的区别
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 什么是重绘与重排
+
+1. ** 重排/回流 **: DOM 的位置发生了改变，浏览器需要重新计算元素的位置。这个过程也称为重排，意思就是重新排列
+
+2. ** 重绘 **: 仅为元素外表发生改变，没有改变布局。只需要把元素的外观重新绘制出来即可。
+
+重排和重绘的代价都是高昂的，都会引起 UI 的卡顿。

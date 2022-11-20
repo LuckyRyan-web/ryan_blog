@@ -3,7 +3,7 @@
   categories:  前端
 ---
 
-1. ***存储的位置不同**，cookie 的放在客户端浏览器上，session 的放在服务器上
+1. **存储的位置不同**，cookie 的放在客户端浏览器上，session 的放在服务器上
 
 2. **存储量不同**，单个 cookie 保存的数据为 <= 4KB，一个站点最多存储 20 个 Cookie，而对于 Session 来说没有上限
 
