@@ -1,0 +1,103 @@
+---
+title: 将一个数组旋转k步
+# hide_table_of_contents: true
+tags:
+    - 数组
+---
+
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+## 题目
+
+[1,2,3,4,5,6,7] 旋转 k 步，得到的结果为 [5,6,7,1,2,3,4]
+
+## pop and unshift
+
+### 代码
+
+```ts
+function route1(arr: number[], k: number) {
+    const length = arr.length
+
+    if (!k || length === 0) {
+        return arr
+    }
+
+    const step = Math.abs(k % length)
+
+    for (let i = 0; i < step; i++) {
+        const n = arr.pop()
+
+        if (n) {
+            arr.unshift(n)
+        }
+    }
+
+    return arr
+}
+```
+
+### 复杂度分析
+
+时间复杂度: O(n^2) 一个 for 循环是 n,但是有一个 unshift 操作,数组是一个连续的内存空间,unshift 的时候,需要把除了第一个值以外的都要往后挪动一个位置
+
+空间复杂度: O(1)
+
+## concat
+
+### 代码
+
+```ts
+function route2(arr: number[], k: number) {
+    const length = arr.length
+
+    if (!k || length === 0) {
+        return arr
+    }
+
+    const step = Math.abs(k % length)
+
+    // slice 不会改变原数组，且为负数的时候可以从数组的最后进行获取
+    const part1 = arr.slice(-step)
+
+    const part2 = arr.slice(0, length - step)
+
+    return part1.concat(part2)
+}
+```
+
+### 复杂度分析
+
+时间复杂度: O(1)
+空间复杂度: O(n)
+
+## 耗时
+
+```ts
+/**
+ * 性能测试
+ * route1: 1.544s
+ * route2: 0.212ms
+ */
+const arr1: number[] = []
+
+for (let i = 0; i < 100000; i++) {
+    arr1.push(i)
+}
+
+console.time('route1')
+route1(arr1, 9 * 10000)
+console.timeEnd('route1')
+
+const arr2: number[] = []
+
+for (let i = 0; i < 100000; i++) {
+    arr2.push(i)
+}
+
+console.time('route2')
+route2(arr2, 9 * 10000)
+console.timeEnd('route2')
+```
