@@ -2,8 +2,7 @@
     "singleQuote": true,
     "semi": false,
     "tabWidth": 4,
-    "overrides": [
-        {
+    "overrides": [{
             "files": "pages/**/*.tsx",
             "options": {
                 "parser": "typescript"
